@@ -107,3 +107,9 @@
     
 })(jQuery);
 
+// location autometic
+
+
+
+
+

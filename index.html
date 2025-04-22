@@ -68,7 +68,7 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <!-- Example menu item -->
             <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
-            <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
+            
 
             <!-- Courses dropdown -->
             <div class="nav-item dropdown">
@@ -130,6 +130,7 @@
                     <a href="contact.html" class="dropdown-item" style="font-size: 14px;"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
                 </div>
             </div>
+            <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
                     <i class="fa fa-home me-2"></i>Login
@@ -631,19 +632,23 @@
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="signup-process.php" method="POST">
+        <form action="signup-process.php" method="POST" enctype="multipart/form-data">
           <div class="modal-body px-4 py-3">
+            <!-- Existing Fields -->
             <div class="mb-3">
               <label for="signupName" class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="signupName" name="name" placeholder="Enter your full name" required>
+              <input type="text" class="form-control" id="signupName" onkeyup="namevalid()" name="name" placeholder="Enter your full name" required>
+              <div class="form-text" id="nameError"></div>
             </div>
             <div class="mb-3">
               <label for="signupEmail" class="form-label">Email Address</label>
-              <input type="email" class="form-control" id="signupEmail" name="email" placeholder="example@domain.com" required>
+              <input type="email" class="form-control" id="signupEmail" onkeyup="emailvalid()" name="email" placeholder="example@domain.com" required>
+              <div class="form-text" id="emailError"></div>
             </div>
             <div class="mb-3">
               <label for="signupPhone" class="form-label">Phone Number</label>
-              <input type="tel" class="form-control" id="signupPhone" name="phone" pattern="[0-9]{10}" placeholder="10-digit number" required>
+              <input type="tel" class="form-control" id="signupPhone" onkeyup="phonevalid()" name="phone" pattern="[0-9]{10}" placeholder="10-digit number" required>
+              <div class="form-text" id="phoneError"></div>
             </div>
             <div class="mb-3">
               <label for="signupPassword" class="form-label">Password</label>
@@ -652,6 +657,76 @@
             <div class="mb-3">
               <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
               <input type="password" class="form-control" id="signupConfirmPassword" name="confirm_password" placeholder="Re-enter password" minlength="6" required>
+            </div>
+  
+            <!-- New Fields -->
+            <div class="mb-3">
+              <label for="signupImage" class="form-label">Profile Image</label>
+              <input type="file" class="form-control" id="signupImage" name="profile_image" accept="image/*">
+            </div>
+            <div class="mb-3">
+              <label for="signupAddress" class="form-label">Address</label>
+              <textarea class="form-control" id="signupAddress" name="address" rows="2" placeholder="Your full address" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="signupCity" class="form-label">City</label>
+              <input type="text" class="form-control" id="signupCity" name="city" placeholder="City name" required>
+            </div>
+            <div class="mb-3">
+              <label for="signupDistrict" class="form-label">District</label>
+              <input type="text" class="form-control" id="signupDistrict" name="district" placeholder="District" required>
+            </div>
+            <div class="mb-3">
+                <label for="signupState" class="form-label">State</label>
+                <select class="form-select" id="signupState" name="state" required>
+                  <option value="" disabled selected>Select your state</option>
+              
+                  <!-- States -->
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                  <option value="Assam">Assam</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Chhattisgarh">Chhattisgarh</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="Himachal Pradesh">Himachal Pradesh</option>
+                  <option value="Jharkhand">Jharkhand</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Manipur">Manipur</option>
+                  <option value="Meghalaya">Meghalaya</option>
+                  <option value="Mizoram">Mizoram</option>
+                  <option value="Nagaland">Nagaland</option>
+                  <option value="Odisha">Odisha</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Sikkim">Sikkim</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Telangana">Telangana</option>
+                  <option value="Tripura">Tripura</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Uttarakhand">Uttarakhand</option>
+                  <option value="West Bengal">West Bengal</option>
+              
+                  <!-- Union Territories -->
+                  <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                  <option value="Chandigarh">Chandigarh</option>
+                  <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                  <option value="Ladakh">Ladakh</option>
+                  <option value="Lakshadweep">Lakshadweep</option>
+                  <option value="Puducherry">Puducherry</option>
+                </select>
+              </div>
+              
+            <div class="mb-3">
+              <label for="signupPin" class="form-label">PIN Code</label>
+              <input type="text" class="form-control" id="signupPin" onkeyup="pinvalid()" name="pin" pattern="[0-9]{6}" placeholder="6-digit PIN code" required>
+              <div class="form-text" id="pinError"></div>
             </div>
           </div>
           <div class="modal-footer px-4 py-3">
@@ -669,6 +744,9 @@
     </div>
   </div>
   
+  
+  
+  
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -683,6 +761,7 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
+    <script src="js/valid.js"></script>
     <script src="js/main.js"></script>
 </body>
 
