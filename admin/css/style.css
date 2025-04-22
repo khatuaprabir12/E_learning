@@ -1,0 +1,41 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
+  }
+
+  .sidebar {
+    height: 100vh;
+    background: #343a40;
+    color: white;
+  }
+
+  .sidebar .nav-link {
+    color: #ccc;
+    transition: 0.3s;
+  }
+
+  .sidebar .nav-link:hover {
+    background: #495057;
+    color: #fff;
+    border-radius: 5px;
+  }
+
+  .card {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.02);
+  }
+
+  .dashboard-header {
+    background: white;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dashboard-header h4 {
+    margin: 0;
+  }
