@@ -67,33 +67,3 @@ function namevalid() {
   
 //   location
 
-// Ensure the modal content is fully loaded before applying events
-document.addEventListener('DOMContentLoaded', function() {
-    const cityData = {
-      "Mumbai": { district: "Mumbai Suburban", state: "Maharashtra", pin: "400001" },
-      "Delhi": { district: "New Delhi", state: "Delhi", pin: "110001" },
-      "Chennai": { district: "Chennai", state: "Tamil Nadu", pin: "600001" },
-      "Bengaluru": { district: "Bangalore Urban", state: "Karnataka", pin: "560001" },
-      "Kolkata": { district: "Kolkata", state: "West Bengal", pin: "700001" },
-      "Lucknow": { district: "Lucknow", state: "Uttar Pradesh", pin: "226001" },
-      "Ahmedabad": { district: "Ahmedabad", state: "Gujarat", pin: "380001" },
-      "Hyderabad": { district: "Hyderabad", state: "Telangana", pin: "500001" },
-      "Pune": { district: "Pune", state: "Maharashtra", pin: "411001" },
-      "Jaipur": { district: "Jaipur", state: "Rajasthan", pin: "302001" }
-    };
-
-    document.getElementById("signupCity").addEventListener("input", function () {
-      const city = this.value.trim();
-      const info = cityData[city];
-
-      if (info) {
-        document.getElementById("signupDistrict").value = info.district;
-        document.getElementById("signupState").value = info.state;
-        document.getElementById("signupPin").value = info.pin;
-      } else {
-        document.getElementById("signupDistrict").value = "";
-        document.getElementById("signupState").value = "";
-        document.getElementById("signupPin").value = "";
-      }
-    });
-  });
