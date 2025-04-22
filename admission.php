@@ -122,17 +122,16 @@
 </body>
 </html> -->
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en-IN">
 <head>
     <meta charset="utf-8">
-    <title>eLEARNING - eLearning HTML Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <title>Edufuture Academy - Best Learning Platform for Computer Courses in India</title>
+    <meta name="description" content="Edufuture Academy offers top-notch courses in Tally, Programming, Graphic Design, Digital Marketing, Web Development, and more. Enhance your skills with expert-led training.">
+    <meta name="keywords" content="Edufuture Academy, Tally courses, Programming courses, Graphic Design, Digital Marketing, Web Development, online learning, skill development, best courses in India">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" href="img/favicon.io.ico" sizes="40x40">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -193,7 +192,6 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <!-- Example menu item -->
             <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
-            <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
 
             <!-- Courses dropdown -->
             <div class="nav-item dropdown">
@@ -255,6 +253,8 @@
                     <a href="contact.html" class="dropdown-item" style="font-size: 14px;"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
                 </div>
             </div>
+            <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
+
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
                     <i class="fa fa-home me-2"></i>Login
@@ -291,7 +291,7 @@
         <h4>Student Registration Form</h4>
       </div>
       <div class="card-body">
-        <form action="submit.php" method="POST" enctype="multipart/form-data">
+        <form id="submitData" action="submit.php" method="POST" enctype="multipart/form-data">
           <div class="row g-3">
 
             <div class="col-md-6">
@@ -305,6 +305,39 @@
               <input type="text" name="father_name" id ="fathersignupName" onkeyup="fathernamevalid()"class="form-control" required>
               <div class="form-text" id="fathernameError"></div>
             </div>
+            <div class="col-md-6">
+              <label class="form-label">Mobile Number</label>
+              <input type="number" name="mobile" id="signupPhone" onkeyup="phonevalid()"  class="form-control" required>
+              <div class="form-text" id="phoneError"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" id="signupEmail" onkeyup="emailvalid()"  class="form-control" required>
+              <div class="form-text" id="emailError"></div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Password</label>
+               <div class="input-group">
+                 <input type="password" name="password" id="signupPass" onkeyup="passwordvalid()" class="form-control" required>
+                 <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('signupPass')">
+                  <i class="fa fa-eye"></i>
+                 </button>
+             </div>
+             <div class="form-text" id="passwordError"></div>
+            </div>
+
+            <div class="col-md-6">
+               <label class="form-label">Confirm Password</label>
+                <div class="input-group">
+              <input type="password" name="confirm_password" id="signupCnfPass" onkeyup="cnfPasswordvalid()" class="form-control" required>
+               <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('signupCnfPass')">
+                  <i class="fa fa-eye"></i>
+              </button>
+            </div>
+             <div class="form-text" id="cnfPasswordError"></div>
+            </div>
+
 
             <div class="col-12">
               <label class="form-label">Address</label>
@@ -362,7 +395,7 @@
 <div class="col-md-4">
   <label class="form-label">Pin Code</label>
   <input type="text" name="pin_code" class="form-control" id="signupPin" onkeyup="pinvalid()" pattern="[1-9][0-9]{5}" maxlength="6" placeholder="6-digit PIN code" required>
-  <div class="form-text text-danger" id="pinError"></div>
+  <div class="form-text " id="pinError"></div>
 </div>
 
 
@@ -382,9 +415,16 @@
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Caste</label>
-              <input type="text" name="caste" class="form-control" required>
+                <label class="form-label">Caste</label>
+                  <select name="caste" class="form-select" required>
+                    <option value="">Select your Caste</option>
+                    <option value="general">General</option>
+                    <option value="sc">SC</option>
+                    <option value="st">ST</option>
+                    <option value="obc">OBC</option>
+                  </select>
             </div>
+          
 
             <div class="col-md-4">
               <label class="form-label">Religion</label>
@@ -395,11 +435,10 @@
               <label class="form-label">Nationality</label>
               <input type="text" name="nationality" class="form-control" required>
             </div>
-
             <div class="col-md-6">
-              <label class="form-label">Mobile Number</label>
-              <input type="tel" name="mobile" id="signupPhone" onkeyup="phonevalid()" pattern="[0-9]{10}" class="form-control" required>
-              <div class="form-text" id="phoneError"></div>git 
+              <label class="form-label">Aadhaar Number</label>
+              <input type="number" name="aadhaar" id="signupAadhaar" onkeyup="aadhaarvalid()" pattern="[0-9]{16}" class="form-control" required>
+              <div class="form-text" id="aadhaarError"></div>
             </div>
 
             <div class="col-md-6">
@@ -522,6 +561,8 @@
 
 
     <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
