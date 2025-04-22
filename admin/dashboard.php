@@ -25,7 +25,7 @@
   <h4 class="text-white mb-4"><i class="bi bi-mortarboard-fill me-2"></i>Edufuture Admin</h4>
   <nav class="nav flex-column">
     <a class="nav-link" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-    <a class="nav-link" href="#"><i class="bi bi-people-fill me-2"></i>Students</a>
+    <a class="nav-link" href="student.php"><i class="bi bi-people-fill me-2"></i>Students</a>
     <a class="nav-link" href="course.php"><i class="bi bi-journal-code me-2"></i>Courses</a>
     <a class="nav-link" href="#"><i class="bi bi-bar-chart-line-fill me-2"></i>Reports</a>
     <a class="nav-link" href="notice.php"><i class="bi bi-bell-fill me-2"></i>Notice</a>
