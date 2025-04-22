@@ -10,6 +10,20 @@ function namevalid() {
       fail(name, error, "Enter a valid name (min 3 letters)");
     }
   }
+
+  // Father Name validation
+function fathernamevalid() {
+  const name = document.getElementById("fathersignupName");
+  const error = document.getElementById("fathernameError");
+  const regex = /^[A-Za-z\s]{3,}$/;
+
+  if (regex.test(name.value.trim())) {
+    success(name, error, "Looks good!");
+  } else {
+    fail(name, error, "Enter a valid fathername (min 3 letters)");
+  }
+}
+
   
   // Email validation
   function emailvalid() {
@@ -28,7 +42,7 @@ function namevalid() {
   function phonevalid() {
     const phone = document.getElementById("signupPhone");
     const error = document.getElementById("phoneError");
-    const regex = /^[0-9]{10}$/;
+    const regex = /^[6-9][0-9]{9}$/;
   
     if (regex.test(phone.value.trim())) {
       success(phone, error, "Valid phone number");
