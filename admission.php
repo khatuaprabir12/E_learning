@@ -316,17 +316,14 @@
               <input type="file" name="profile_image" class="form-control" accept="image/*" >
             </div>
 
-<<<<<<< HEAD
-           <div class="col-md-6 mb-3">
-=======
-            <div class="col-md-6 mb-3">
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
-         <label for="course" class="form-label fw-semibold">Select a Course</label>
-         <select name="course" id="course" class="form-select border-primary shadow-sm" required>
-        <option value="">-- Select Course --</option>
+
+          <!-- Course Selection -->
+<div class="col-md-6 mb-3">
+  <label for="course" class="form-label fw-semibold">Select a Course</label>
+  <select name="course" id="course" class="form-select border-primary shadow-sm" required>
+    <option value="">-- Select Course --</option>
 
     <optgroup label="📚 Certificate of Diploma">
-<<<<<<< HEAD
       <option value="Diploma in Modern Computer Office Application (1 Year)">Diploma in Modern Computer Office Application (1 Year)</option>
       <option value="Diploma in Computer Application & Programming (1 Year)">Diploma in Computer Application & Programming (1 Year)</option>
       <option value="Diploma in Computer Office Application (1 Year)">Diploma in Computer Office Application (1 Year)</option>
@@ -338,27 +335,9 @@
 
     <optgroup label="📄 Certificate of Accounting">
       <option value="Certificate of Tally (6 Months)">Certificate of Tally (6 Months)</option>
-=======
-      <option value="diploma_it">Diploma in Modern Computer Office Application (1 Year)</option>
-      <option value="diploma_biz">Diploma in Computer Application & Programming (1 Year)</option>
-      <option value="diploma_hr">Diploma in Computer Office Application (1 Year)</option>
-    </optgroup>
-
-    <optgroup label="🗣️ Language Courses">
-      <option value="english">Communicative English (6 Months)</option>
-    </optgroup>
-
-    <optgroup label="📄 Certificate of Accounting">
-      <option value="accounting">Certificate of Tally (6 Months)</option>
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
     </optgroup>
   </select>
 </div>
-
-<<<<<<< HEAD
-            
-=======
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
 
             <div class="col-12 text-center mt-4">
               <button type="submit" class="btn btn-primary px-4">Submit</button>
