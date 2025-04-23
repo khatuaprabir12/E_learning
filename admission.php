@@ -337,15 +337,27 @@
               <input type="file" name="profile_image" class="form-control" accept="image/*" required>
             </div>
 
-            <div class="col-md-6">
-              <label class="form-label">Course</label>
-              <select name="course" class="form-select" required>
-                <option value="">-- Select Course --</option>
-                <option>Cerficate of Diploma</option>
-                <option>Communicative English</option>
-                <option>Certificate of Accounting</option>
-                </select>
-            </div>
+            <div class="col-md-6 mb-3">
+         <label for="course" class="form-label fw-semibold">Select a Course</label>
+         <select name="course" id="course" class="form-select border-primary shadow-sm" required>
+        <option value="">-- Select Course --</option>
+
+    <optgroup label="📚 Certificate of Diploma">
+      <option value="diploma_it">Diploma in Modern Computer Office Application (1 Year)</option>
+      <option value="diploma_biz">Diploma in Computer Application & Programming (1 Year)</option>
+      <option value="diploma_hr">Diploma in Computer Office Application (1 Year)</option>
+    </optgroup>
+
+    <optgroup label="🗣️ Language Courses">
+      <option value="english">Communicative English (6 Months)</option>
+    </optgroup>
+
+    <optgroup label="📄 Certificate of Accounting">
+      <option value="accounting">Certificate of Tally (6 Months)</option>
+    </optgroup>
+  </select>
+</div>
+
 
             <div class="col-12 text-center mt-4">
               <button type="submit" class="btn btn-primary px-4">Submit</button>
