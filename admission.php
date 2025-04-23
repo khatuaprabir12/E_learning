@@ -59,108 +59,87 @@
 </div>
 <!-- Toolbar End -->
 
-<!-- navbar start -->
-
+<!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
-    </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <!-- Example menu item -->
-            <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
+  <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
+  </a>
+  <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-            <!-- Courses dropdown -->
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <i class="fa fa-laptop-code me-2"></i>Courses
-                </a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="diploma.html" class="dropdown-item"><i class="fa fa-graduation-cap me-2"></i>Diploma</a>
-                    <a href="certificate.html" class="dropdown-item"><i class="fa fa-certificate me-2"></i>Certificate</a>
-                    <a href="advanced.html" class="dropdown-item"><i class="fa fa-rocket me-2"></i>Advance</a>
-                </div>
-            </div>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav ms-auto p-4 p-lg-0">
+      <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
 
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-                    <i class="fa fa-envelope me-2"></i>Enquiry
-                </a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="atc-enquiry.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-building me-2"></i>Authorize Training Center (ATC) Enquiry
-                    </a>
-                    <a href="student-enquiry.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-user-graduate me-2"></i>Student Enquiry
-                    </a>
-                </div>
-            </div>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-                    <i class="fa fa-user-check me-2"></i>Student Zone
-                </a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="online-verification.html" class="dropdown-item" style="font-size: 14px;"><i class="fa fa-check-circle me-2"></i>Online Verification</a>
-                    <a href="online-exam.html" class="dropdown-item" style="font-size: 14px;"><i class="fa fa-edit me-2"></i>Online Exam</a>
-                    <a href="results.html" class="dropdown-item" style="font-size: 14px;"><i class="fa fa-chart-line me-2"></i>Results</a>
-                </div>
-            </div>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-                    <i class="fa fa-download me-2"></i>Download
-                </a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="admission-form.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-file-alt me-2"></i>Admission Form
-                    </a>
-                    <a href="admit-card-download.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-id-card me-2"></i>Admit Card Download
-                    </a>
-                    <a href="notice-board.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-bullhorn me-2"></i>Notice Board
-                    </a>
-                </div>
-            </div>
-          
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-                    <i class="fa fa-address-book me-2"></i>Contact 
-                </a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="contact.html" class="dropdown-item" style="font-size: 14px;"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-                </div>
-            </div>
-            <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
-
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-                    <i class="fa fa-home me-2"></i>Login
-                </a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="student-login.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-user-graduate me-2"></i>Student Login
-                    </a>
-                    <a href="center-login.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-building me-2"></i>Center Login
-                    </a>
-                    <a href="admin-login.html" class="dropdown-item" style="font-size: 14px;">
-                        <i class="fa fa-user-shield me-2"></i>Admin Login
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#signupModal">
-                        <i class="fa fa-user-plus me-2"></i>Signup
-                    </a>
-                    
-                </div>
-            </div>
-            
+      <!-- Courses dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+          <i class="fa fa-laptop-code me-2"></i>Courses
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="diploma.html" class="dropdown-item"><i class="fa fa-graduation-cap me-2"></i>Diploma</a>
+          <a href="certificate.html" class="dropdown-item"><i class="fa fa-certificate me-2"></i>Certificate</a>
+          <a href="advanced.html" class="dropdown-item"><i class="fa fa-rocket me-2"></i>Advance</a>
         </div>
+      </div>
+
+      <!-- Enquiry dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
+          <i class="fa fa-envelope me-2"></i>Enquiry
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="atc-enquiry.html" class="dropdown-item"><i class="fa fa-building me-2"></i>ATC Enquiry</a>
+          <a href="student-enquiry.html" class="dropdown-item"><i class="fa fa-user-graduate me-2"></i>Student Enquiry</a>
+        </div>
+      </div>
+
+      <!-- Student Zone dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
+          <i class="fa fa-user-check me-2"></i>Student Zone
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="online-verification.html" class="dropdown-item"><i class="fa fa-check-circle me-2"></i>Online Verification</a>
+          <a href="online-exam.html" class="dropdown-item"><i class="fa fa-edit me-2"></i>Online Exam</a>
+          <a href="results.html" class="dropdown-item"><i class="fa fa-chart-line me-2"></i>Results</a>
+        </div>
+      </div>
+
+      <!-- Download dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
+          <i class="fa fa-download me-2"></i>Download
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="admission-form.html" class="dropdown-item"><i class="fa fa-file-alt me-2"></i>Admission Form</a>
+          <a href="admit-card-download.html" class="dropdown-item"><i class="fa fa-id-card me-2"></i>Admit Card</a>
+          <a href="notice-board.html" class="dropdown-item"><i class="fa fa-bullhorn me-2"></i>Notice Board</a>
+        </div>
+      </div>
+
+      <!-- Contact dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
+          <i class="fa fa-address-book me-2"></i>Contact
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="contact.html" class="dropdown-item"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
+        </div>
+      </div>
+
+      <!-- About -->
+      <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
+
+      <!-- Login / Register -->
+      <a href="login.html" class="nav-item nav-link"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
+      <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
     </div>
+  </div>
 </nav>
 <!-- Navbar End -->
+
 
 <!-- Scrolling Banner Start -->
 <div class="scrolling-banner bg-dark text-warning py-2 px-3">
@@ -233,12 +212,12 @@
 
             <div class="col-md-4">
               <label class="form-label">City</label>
-              <input type="text" class="form-control" id="signupCity" name="city" placeholder="City name" required>
+              <input type="text" class="form-control" id="signupCity" name="city" placeholder="City name" >
             </div>
 
             <div class="col-md-4">
               <label class="form-label">District</label>
-              <input type="text" name="district" class="form-control" required>
+              <input type="text" name="district" class="form-control" >
             </div>
 
            <!-- State Dropdown -->
@@ -297,7 +276,7 @@
 
             <div class="col-md-4">
               <label class="form-label">Date of Birth</label>
-              <input type="date" name="dob" class="form-control" required>
+              <input type="date" name="dob" class="form-control" >
             </div>
 
             <div class="col-md-4">
@@ -314,12 +293,12 @@
 
             <div class="col-md-4">
               <label class="form-label">Religion</label>
-              <input type="text" name="religion" class="form-control" required>
+              <input type="text" name="religion" class="form-control" >
             </div>
 
             <div class="col-md-4">
               <label class="form-label">Nationality</label>
-              <input type="text" name="nationality" class="form-control" required>
+              <input type="text" name="nationality" class="form-control" >
             </div>
             <div class="col-md-6">
               <label class="form-label">Aadhaar Number</label>
@@ -329,23 +308,36 @@
 
             <div class="col-md-6">
               <label class="form-label">Qualification</label>
-              <input type="text" name="qualification" class="form-control" required>
+              <input type="text" name="qualification" class="form-control" >
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Profile Image</label>
-              <input type="file" name="profile_image" class="form-control" accept="image/*" required>
+              <input type="file" name="profile_image" class="form-control" accept="image/*" >
             </div>
 
-            <div class="col-md-6">
-              <label class="form-label">Course</label>
-              <select name="course" class="form-select" required>
-                <option value="">-- Select Course --</option>
-                <option>Cerficate of Diploma</option>
-                <option>Communicative English</option>
-                <option>Certificate of Accounting</option>
-                </select>
-            </div>
+           <div class="col-md-6 mb-3">
+         <label for="course" class="form-label fw-semibold">Select a Course</label>
+         <select name="course" id="course" class="form-select border-primary shadow-sm" required>
+        <option value="">-- Select Course --</option>
+
+    <optgroup label="📚 Certificate of Diploma">
+      <option value="Diploma in Modern Computer Office Application (1 Year)">Diploma in Modern Computer Office Application (1 Year)</option>
+      <option value="Diploma in Computer Application & Programming (1 Year)">Diploma in Computer Application & Programming (1 Year)</option>
+      <option value="Diploma in Computer Office Application (1 Year)">Diploma in Computer Office Application (1 Year)</option>
+    </optgroup>
+
+    <optgroup label="🗣️ Language Courses">
+      <option value="Communicative English (6 Months)">Communicative English (6 Months)</option>
+    </optgroup>
+
+    <optgroup label="📄 Certificate of Accounting">
+      <option value="Certificate of Tally (6 Months)">Certificate of Tally (6 Months)</option>
+    </optgroup>
+  </select>
+</div>
+
+            
 
             <div class="col-12 text-center mt-4">
               <button type="submit" class="btn btn-primary px-4">Submit</button>
