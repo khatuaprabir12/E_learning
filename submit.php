@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 // include("connection.php");
 
 // // Sanitize function
@@ -86,6 +86,7 @@
 // }
 
 // $connect->close();
+
 
 
 
