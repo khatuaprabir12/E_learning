@@ -341,12 +341,10 @@
               <label class="form-label">Course</label>
               <select name="course" class="form-select" required>
                 <option value="">-- Select Course --</option>
-                <option>B.Tech</option>
-                <option>B.Sc</option>
-                <option>B.A</option>
-                <option>M.Tech</option>
-                <option>MBA</option>
-              </select>
+                <option>Cerficate of Diploma</option>
+                <option>Communicative English</option>
+                <option>Certificate of Accounting</option>
+                </select>
             </div>
 
             <div class="col-12 text-center mt-4">
