@@ -29,7 +29,7 @@
         <a class="nav-link text-white" href="course.php"><i class="bi bi-journal-code me-2"></i>Courses</a>
         <a class="nav-link text-white" href="#"><i class="bi bi-bar-chart-line-fill me-2"></i>Reports</a>
         <a class="nav-link text-white" href="notice.php"><i class="bi bi-bell-fill me-2"></i>Notice</a>
-        <a class="nav-link text-white" href="setting.php"><i class="bi bi-gear-fill me-2"></i>Settings</a>
+        <a class="nav-link text-white" href="settings.php"><i class="bi bi-gear-fill me-2"></i>Settings</a>
       </nav>
     </div>
 
