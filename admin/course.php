@@ -54,18 +54,17 @@
             </ul>
         </div>
     </div>
-    
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Course Management</h2>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
-                <i class="fas fa-plus"></i> Add New Course 1
-            </button>
-    </div>
+   <!-- Add Course & Category Modal Trigger -->
+<div class="text-end mt-3">
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseCategoryModal">
+    <i class="fas fa-plus"></i> Add Course 2 (working)
+  </button>
+</div>
 
 
 
 <!-- Add Course Modal -->
+ 1
 <div class="modal fade" id="addCourseCategoryModal" tabindex="-1" aria-labelledby="addCourseCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form class="modal-content" id="addCourseCategoryForm">
@@ -122,10 +121,11 @@
 <!-- Add Course & Category Modal Trigger -->
 <div class="text-end mt-3">
   <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseCategoryModal">
-    <i class="fas fa-plus"></i> Add Course 2
+    <i class="fas fa-plus"></i> Add Course 2 (working)
   </button>
 </div>
 <!-- Add Course Modal -->
+ 2
 <div class="modal fade" id="addCourseCategoryModal" tabindex="-1" aria-labelledby="addCourseCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form class="modal-content" id="addCourseCategoryForm">
