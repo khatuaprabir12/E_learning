@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>eLEARNING - eLearning HTML Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <title>Edufuture Academy - Best Learning Platform for Computer Courses in India</title>
+    <meta name="description" content="Edufuture Academy offers top-notch courses in Tally, Programming, Graphic Design, Digital Marketing, Web Development, and more. Enhance your skills with expert-led training.">
+    <meta name="keywords" content="Edufuture Academy, Tally courses, Programming courses, Graphic Design, Digital Marketing, Web Development, online learning, skill development, best courses in India">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" href="img/favicon.io.ico" sizes="40x40">
+
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +65,7 @@
 
             <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
       <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
     </a>
     <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -73,7 +74,7 @@
   
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav ms-auto p-4 p-lg-0">
-        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
+        <a href="index.php" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
   
         <!-- Courses dropdown -->
         <div class="nav-item dropdown">
@@ -122,21 +123,17 @@
           </div>
         </div>
   
-        <!-- Contact dropdown -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-            <i class="fa fa-address-book me-2"></i>Contact
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="contact.html" class="dropdown-item"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-          </div>
-        </div>
+        <!-- Contact  -->
+        <a href="contact.php" class="nav-item nav-link"><i class="fa fa-address-book me-2"></i>Contact Us</a>
+        
   
         <!-- About -->
-        <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
+        <a href="about.php" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
   
         <!-- Login / Register -->
-        <a href="login.html" class="nav-item nav-link"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
+        <a href="#" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <i class="fa fa-sign-in-alt me-2"></i>Login
+        </a>
         <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
       </div>
     </div>
@@ -335,6 +332,63 @@
         </div>
     </div>
     <!-- Footer End -->
+
+
+ <!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-header bg-primary text-center text-white">
+          <h5 class="modal-title" id="loginModalLabel">Edufuture Academy Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="authenticate.php" method="POST">
+          <div class="modal-body">
+            <?php if (isset($_GET['error'])): ?>
+              <?php if ($_GET['error'] == 1): ?>
+                <div class="alert alert-danger text-center">❌ Invalid Credentials</div>
+              <?php elseif ($_GET['error'] == 2): ?>
+                <div class="alert alert-warning text-center"><?= htmlspecialchars($_GET['message']); ?></div>
+              <?php endif; ?>
+            <?php endif; ?>
+  
+            <!-- Redirect Page -->
+            <input type="hidden" name="redirect" value="<?= basename($_SERVER['PHP_SELF']); ?>">
+  
+            <!-- Login Type Selector -->
+            <div class="mb-3">
+              <label for="login_type" class="form-label">Login As</label>
+              <select name="login_type" class="form-select" required>
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+  
+            <!-- Username/Email/Student ID -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Username / Email / Student ID</label>
+              <input type="text" name="username" class="form-control" required>
+            </div>
+  
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" required>
+            </div>
+          </div>
+  
+          <div class="modal-footer flex-column">
+            <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+  
+            <!-- Register Link -->
+            <p class="text-center mb-0">Don't have an account? 
+              <a href="admission.php" class="text-decoration-none">Register here</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
     <!-- Back to Top -->

@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
@@ -60,7 +65,7 @@
 
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
       <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
     </a>
     <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -69,7 +74,7 @@
   
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav ms-auto p-4 p-lg-0">
-        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
+        <a href="index.php" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
   
         <!-- Courses dropdown -->
         <div class="nav-item dropdown">
@@ -118,22 +123,37 @@
           </div>
         </div>
   
-        <!-- Contact dropdown -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-            <i class="fa fa-address-book me-2"></i>Contact
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="contact.html" class="dropdown-item"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-          </div>
-        </div>
+       <!-- Contact  -->
+       <a href="contact.php" class="nav-item nav-link"><i class="fa fa-address-book me-2"></i>Contact Us</a>
   
         <!-- About -->
         <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
   
-        <!-- Login / Register -->
-        <a href="login.html" class="nav-item nav-link"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
-        <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+      
+              <!-- Other Menu Items -->
+      
+              <?php if (isset($_SESSION['student_logged_in'])): ?>
+                <!-- Profile Dropdown -->
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-user-circle me-2"></i> Hi, <?= $_SESSION['student_name']; ?>
+                  </a>
+                  <div class="dropdown-menu fade-down m-0">
+                    <a href="profile.php" class="dropdown-item"><i class="fa fa-user me-2"></i> Profile</a>
+                    <a href="logout.php" class="dropdown-item"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
+                  </div>
+                </div>
+              <?php else: ?>
+                <!-- Login / Register -->
+                <a href="#" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
+                <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
+              <?php endif; ?>
+      
+            </div>
+          </div>
+
       </div>
     </div>
   </nav>
@@ -611,127 +631,79 @@
     <!-- Footer End -->
 
 
-<!-- Signup Modal -->
-<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="signupModalLabel">
-            <i class="fa fa-user-plus me-2"></i> Sign Up
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content shadow-lg">
+        <div class="modal-header bg-primary text-center text-white">
+          <h5 class="modal-title" id="loginModalLabel">Edufuture Academy Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="signup-process.php" method="POST" enctype="multipart/form-data">
-          <div class="modal-body px-4 py-3">
-            <!-- Existing Fields -->
+        <form action="authenticate.php" method="POST">
+          <div class="modal-body">
+            <?php if (isset($_GET['error'])): ?>
+              <?php if ($_GET['error'] == 1): ?>
+                <div class="alert alert-danger text-center">❌ Invalid Credentials</div>
+              <?php elseif ($_GET['error'] == 2): ?>
+                <div class="alert alert-warning text-center"><?= htmlspecialchars($_GET['message']); ?></div>
+              <?php endif; ?>
+            <?php endif; ?>
+  
+            <!-- Redirect Page -->
+            <input type="hidden" name="redirect" value="<?= basename($_SERVER['PHP_SELF']); ?>">
+  
+            <!-- Login Type Selector -->
             <div class="mb-3">
-              <label for="signupName" class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="signupName" onkeyup="namevalid()" name="name" placeholder="Enter your full name" required>
-              <div class="form-text" id="nameError"></div>
-            </div>
-            <div class="mb-3">
-              <label for="signupEmail" class="form-label">Email Address</label>
-              <input type="email" class="form-control" id="signupEmail" onkeyup="emailvalid()" name="email" placeholder="example@domain.com" required>
-              <div class="form-text" id="emailError"></div>
-            </div>
-            <div class="mb-3">
-              <label for="signupPhone" class="form-label">Phone Number</label>
-              <input type="tel" class="form-control" id="signupPhone" onkeyup="phonevalid()" name="phone" pattern="[0-9]{10}" placeholder="10-digit number" required>
-              <div class="form-text" id="phoneError"></div>
-            </div>
-            <div class="mb-3">
-              <label for="signupPassword" class="form-label">Password</label>
-              <input type="password" class="form-control" id="signupPassword" name="password" placeholder="Minimum 6 characters" minlength="6" required>
-            </div>
-            <div class="mb-3">
-              <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="signupConfirmPassword" name="confirm_password" placeholder="Re-enter password" minlength="6" required>
+              <label for="login_type" class="form-label">Login As</label>
+              <select name="login_type" class="form-select" required>
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+              </select>
             </div>
   
-            <!-- New Fields -->
+            <!-- Username/Email/Student ID -->
             <div class="mb-3">
-              <label for="signupImage" class="form-label">Profile Image</label>
-              <input type="file" class="form-control" id="signupImage" name="profile_image" accept="image/*">
+              <label for="username" class="form-label">Username / Email / Student ID</label>
+              <input type="text" name="username" class="form-control" required>
             </div>
+  
+            <!-- Password -->
             <div class="mb-3">
-              <label for="signupAddress" class="form-label">Address</label>
-              <textarea class="form-control" id="signupAddress" name="address" rows="2" placeholder="Your full address" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="signupCity" class="form-label">City</label>
-              <input type="text" class="form-control" id="signupCity" name="city" placeholder="City name" required>
-            </div>
-            <div class="mb-3">
-              <label for="signupDistrict" class="form-label">District</label>
-              <input type="text" class="form-control" id="signupDistrict" name="district" placeholder="District" required>
-            </div>
-            <div class="mb-3">
-                <label for="signupState" class="form-label">State</label>
-                <select class="form-select" id="signupState" name="state" required>
-                  <option value="" disabled selected>Select your state</option>
-              
-                  <!-- States -->
-                  <option value="Andhra Pradesh">Andhra Pradesh</option>
-                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                  <option value="Assam">Assam</option>
-                  <option value="Bihar">Bihar</option>
-                  <option value="Chhattisgarh">Chhattisgarh</option>
-                  <option value="Goa">Goa</option>
-                  <option value="Gujarat">Gujarat</option>
-                  <option value="Haryana">Haryana</option>
-                  <option value="Himachal Pradesh">Himachal Pradesh</option>
-                  <option value="Jharkhand">Jharkhand</option>
-                  <option value="Karnataka">Karnataka</option>
-                  <option value="Kerala">Kerala</option>
-                  <option value="Madhya Pradesh">Madhya Pradesh</option>
-                  <option value="Maharashtra">Maharashtra</option>
-                  <option value="Manipur">Manipur</option>
-                  <option value="Meghalaya">Meghalaya</option>
-                  <option value="Mizoram">Mizoram</option>
-                  <option value="Nagaland">Nagaland</option>
-                  <option value="Odisha">Odisha</option>
-                  <option value="Punjab">Punjab</option>
-                  <option value="Rajasthan">Rajasthan</option>
-                  <option value="Sikkim">Sikkim</option>
-                  <option value="Tamil Nadu">Tamil Nadu</option>
-                  <option value="Telangana">Telangana</option>
-                  <option value="Tripura">Tripura</option>
-                  <option value="Uttar Pradesh">Uttar Pradesh</option>
-                  <option value="Uttarakhand">Uttarakhand</option>
-                  <option value="West Bengal">West Bengal</option>
-              
-                  <!-- Union Territories -->
-                  <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                  <option value="Chandigarh">Chandigarh</option>
-                  <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                  <option value="Ladakh">Ladakh</option>
-                  <option value="Lakshadweep">Lakshadweep</option>
-                  <option value="Puducherry">Puducherry</option>
-                </select>
-              </div>
-              
-            <div class="mb-3">
-              <label for="signupPin" class="form-label">PIN Code</label>
-              <input type="text" class="form-control" id="signupPin" onkeyup="pinvalid()" name="pin" pattern="[0-9]{6}" placeholder="6-digit PIN code" required>
-              <div class="form-text" id="pinError"></div>
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" required>
             </div>
           </div>
-          <div class="modal-footer px-4 py-3">
-            <button type="submit" class="btn btn-primary w-100">
-              <i class="fa fa-user-plus me-2"></i> Create Account
-            </button>
-          </div>
-          <div class="text-center pb-3">
-            <small>Already have an account?
-              <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login here</a>
-            </small>
+  
+          <div class="modal-footer flex-column">
+            <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+  
+            <!-- Register Link -->
+            <p class="text-center mb-0">Don't have an account? 
+              <a href="admission.php" class="text-decoration-none">Register here</a>
+            </p>
           </div>
         </form>
       </div>
     </div>
   </div>
+  
+  
+  
+  
+  <?php if (isset($_GET['error'])): ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      loginModal.show(); // ✅ this is the correct method to show the modal
+    });
+  </script>
+  <?php endif; ?>
+  
+  <!-- login modal end -->
+
+ 
+  
+  
   
   
   

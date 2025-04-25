@@ -1,4 +1,8 @@
 
+<?php
+session_start(); // Make sure this is at the very top of the file
+?>
+
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
@@ -61,7 +65,7 @@
 
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-  <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+  <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
     <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
   </a>
   <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -70,7 +74,7 @@
 
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <div class="navbar-nav ms-auto p-4 p-lg-0">
-      <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
+      <a href="index.php" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
 
       <!-- Courses dropdown -->
       <div class="nav-item dropdown">
@@ -119,21 +123,16 @@
         </div>
       </div>
 
-      <!-- Contact dropdown -->
-      <div class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-          <i class="fa fa-address-book me-2"></i>Contact
-        </a>
-        <div class="dropdown-menu fade-down m-0">
-          <a href="contact.html" class="dropdown-item"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-        </div>
-      </div>
+      <!-- Contact  -->
+      <a href="contact.php" class="nav-item nav-link"><i class="fa fa-address-book me-2"></i>Contact Us</a>
 
       <!-- About -->
-      <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
+      <a href="about.php" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
 
       <!-- Login / Register -->
-      <a href="login.html" class="nav-item nav-link"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
+      <a href="#" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <i class="fa fa-sign-in-alt me-2"></i>Login
+      </a>
       <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
     </div>
   </div>
@@ -148,6 +147,21 @@
     </div>
 </div>
 <!-- Scrolling Banner End -->
+
+
+<?php if (isset($_SESSION['error'])): ?>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '<?php echo addslashes($_SESSION['error']); ?>'
+      });
+    });
+  </script>
+  <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
   
 <!-- form start -->
     <div class="container mt-5 mb-5">
@@ -320,7 +334,7 @@
           <!-- Course Selection -->
 <div class="col-md-6 mb-3">
   <label for="course" class="form-label fw-semibold">Select a Course</label>
-  <select name="course" id="course" class="form-select border-primary shadow-sm" required>
+  <select name="course" id="course" class="form-select  shadow-sm" required>
     <option value="">-- Select Course --</option>
 
     <optgroup label="📚 Certificate of Diploma">
@@ -339,9 +353,19 @@
   </select>
 </div>
 
-            <div class="col-12 text-center mt-4">
-              <button type="submit" class="btn btn-primary px-4">Submit</button>
-            </div>
+            <!-- Link to Open Login Modal -->
+             <!-- Submit Button -->
+          <div class="col-12 text-center mt-4">
+             <button type="submit" class="btn btn-primary px-4">Submit</button>
+          </div>
+           <!-- Link to Open Login Modal -->
+          <div class="col-12 text-center mt-3">
+              <p>Already have an account? 
+                <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="text-decoration-none">Login here</a>
+               </p>
+          </div>
+
+
 
           </div>
         </form>
@@ -430,6 +454,69 @@
         </div>
     </div>
     <!-- Footer End -->
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header bg-primary text-center text-white">
+        <h5 class="modal-title" id="loginModalLabel">Edufuture Academy Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="authenticate.php" method="POST">
+        <div class="modal-body">
+          <?php if (isset($_GET['error'])): ?>
+            <?php if ($_GET['error'] == 1): ?>
+              <div class="alert alert-danger text-center">❌ Invalid Credentials</div>
+            <?php elseif ($_GET['error'] == 2): ?>
+              <div class="alert alert-warning text-center"><?= htmlspecialchars($_GET['message']); ?></div>
+            <?php endif; ?>
+          <?php endif; ?>
+
+          <!-- Redirect Page -->
+          <input type="hidden" name="redirect" value="<?= basename($_SERVER['PHP_SELF']); ?>">
+
+          <!-- Login Type Selector -->
+          <div class="mb-3">
+            <label for="login_type" class="form-label">Login As</label>
+            <select name="login_type" class="form-select" required>
+              <option value="student">Student</option>
+            </select>
+          </div>
+
+          <!-- Username/Email/Student ID -->
+          <div class="mb-3">
+            <label for="username" class="form-label">Username / Email / Student ID</label>
+            <input type="text" name="username" class="form-control" required>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  
+  <?php if (isset($_GET['error'])): ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      loginModal.show(); // ✅ this is the correct method to show the modal
+    });
+  </script>
+  <?php endif; ?>
+  
+  <!-- login modal end -->
 
 
     <!-- Back to Top -->

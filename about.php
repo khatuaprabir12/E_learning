@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
@@ -60,7 +64,7 @@
 
     <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
       <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
     </a>
     <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -69,7 +73,7 @@
   
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav ms-auto p-4 p-lg-0">
-        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
+        <a href="index.php" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
   
         <!-- Courses dropdown -->
         <div class="nav-item dropdown">
@@ -77,9 +81,9 @@
             <i class="fa fa-laptop-code me-2"></i>Courses
           </a>
           <div class="dropdown-menu fade-down m-0">
-            <a href="diploma.html" class="dropdown-item"><i class="fa fa-graduation-cap me-2"></i>Diploma</a>
-            <a href="certificate.html" class="dropdown-item"><i class="fa fa-certificate me-2"></i>Certificate</a>
-            <a href="advanced.html" class="dropdown-item"><i class="fa fa-rocket me-2"></i>Advance</a>
+            <a href="diploma.php" class="dropdown-item"><i class="fa fa-graduation-cap me-2"></i>Diploma</a>
+            <a href="certificate.php" class="dropdown-item"><i class="fa fa-certificate me-2"></i>Certificate</a>
+            <a href="advanced.php" class="dropdown-item"><i class="fa fa-rocket me-2"></i>Advance</a>
           </div>
         </div>
   
@@ -89,8 +93,8 @@
             <i class="fa fa-envelope me-2"></i>Enquiry
           </a>
           <div class="dropdown-menu fade-down m-0">
-            <a href="atc-enquiry.html" class="dropdown-item"><i class="fa fa-building me-2"></i>ATC Enquiry</a>
-            <a href="student-enquiry.html" class="dropdown-item"><i class="fa fa-user-graduate me-2"></i>Student Enquiry</a>
+            <a href="atc-enquiry.php" class="dropdown-item"><i class="fa fa-building me-2"></i>ATC Enquiry</a>
+            <a href="student-enquiry.php" class="dropdown-item"><i class="fa fa-user-graduate me-2"></i>Student Enquiry</a>
           </div>
         </div>
   
@@ -100,9 +104,9 @@
             <i class="fa fa-user-check me-2"></i>Student Zone
           </a>
           <div class="dropdown-menu fade-down m-0">
-            <a href="online-verification.html" class="dropdown-item"><i class="fa fa-check-circle me-2"></i>Online Verification</a>
-            <a href="online-exam.html" class="dropdown-item"><i class="fa fa-edit me-2"></i>Online Exam</a>
-            <a href="results.html" class="dropdown-item"><i class="fa fa-chart-line me-2"></i>Results</a>
+            <a href="online-verification.php" class="dropdown-item"><i class="fa fa-check-circle me-2"></i>Online Verification</a>
+            <a href="online-exam.php" class="dropdown-item"><i class="fa fa-edit me-2"></i>Online Exam</a>
+            <a href="results.php" class="dropdown-item"><i class="fa fa-chart-line me-2"></i>Results</a>
           </div>
         </div>
   
@@ -112,28 +116,42 @@
             <i class="fa fa-download me-2"></i>Download
           </a>
           <div class="dropdown-menu fade-down m-0">
-            <a href="admission-form.html" class="dropdown-item"><i class="fa fa-file-alt me-2"></i>Admission Form</a>
-            <a href="admit-card-download.html" class="dropdown-item"><i class="fa fa-id-card me-2"></i>Admit Card</a>
-            <a href="notice-board.html" class="dropdown-item"><i class="fa fa-bullhorn me-2"></i>Notice Board</a>
+            <a href="admission-form.php" class="dropdown-item"><i class="fa fa-file-alt me-2"></i>Admission Form</a>
+            <a href="admit-card-download.php" class="dropdown-item"><i class="fa fa-id-card me-2"></i>Admit Card</a>
+            <a href="notice-board.php" class="dropdown-item"><i class="fa fa-bullhorn me-2"></i>Notice Board</a>
           </div>
         </div>
   
-        <!-- Contact dropdown -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-            <i class="fa fa-address-book me-2"></i>Contact
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="contact.html" class="dropdown-item"><i class="fa fa-phone-alt me-2"></i>Contact Us</a>
-          </div>
-        </div>
+        <!-- Contact  -->
+        <a href="contact.php" class="nav-item nav-link"><i class="fa fa-address-book me-2"></i>Contact Us</a>
   
         <!-- About -->
-        <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
+        <a href="about.php" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
   
-        <!-- Login / Register -->
-        <a href="login.html" class="nav-item nav-link"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
-        <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+      
+              <!-- Other Menu Items -->
+      
+              <?php if (isset($_SESSION['student_logged_in'])): ?>
+                <!-- Profile Dropdown -->
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-user-circle me-2"></i> Hi, <?= $_SESSION['student_name']; ?>
+                  </a>
+                  <div class="dropdown-menu fade-down m-0">
+                    <a href="profile.php" class="dropdown-item"><i class="fa fa-user me-2"></i> Profile</a>
+                    <a href="logout.php" class="dropdown-item"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
+                  </div>
+                </div>
+              <?php else: ?>
+                <!-- Login / Register -->
+                <a href="#" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
+                <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
+              <?php endif; ?>
+      
+            </div>
+          </div>
       </div>
     </div>
   </nav>
@@ -156,7 +174,7 @@
                     <h1 class="display-3 text-white animated slideInDown">About Edufuture Academy</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a class="text-white" href="index.php">Home</a></li>
                             <li class="breadcrumb-item text-white active" aria-current="page">About Us</li>
                         </ol>
                     </nav>
@@ -422,6 +440,74 @@
         </div>
     </div>
     <!-- Footer End -->
+
+
+ <!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-header bg-primary text-center text-white">
+          <h5 class="modal-title" id="loginModalLabel">Edufuture Academy Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="authenticate.php" method="POST">
+          <div class="modal-body">
+            <?php if (isset($_GET['error'])): ?>
+              <?php if ($_GET['error'] == 1): ?>
+                <div class="alert alert-danger text-center">❌ Invalid Credentials</div>
+              <?php elseif ($_GET['error'] == 2): ?>
+                <div class="alert alert-warning text-center"><?= htmlspecialchars($_GET['message']); ?></div>
+              <?php endif; ?>
+            <?php endif; ?>
+  
+            <!-- Redirect Page -->
+            <input type="hidden" name="redirect" value="<?= basename($_SERVER['PHP_SELF']); ?>">
+  
+            <!-- Login Type Selector -->
+            <div class="mb-3">
+              <label for="login_type" class="form-label">Login As</label>
+              <select name="login_type" class="form-select" required>
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+  
+            <!-- Username/Email/Student ID -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Username / Email / Student ID</label>
+              <input type="text" name="username" class="form-control" required>
+            </div>
+  
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" required>
+            </div>
+          </div>
+  
+          <div class="modal-footer flex-column">
+            <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+  
+            <!-- Register Link -->
+            <p class="text-center mb-0">Don't have an account? 
+              <a href="admission.php" class="text-decoration-none">Register here</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <?php if (isset($_GET['error'])): ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      loginModal.show(); // ✅ this is the correct method to show the modal
+    });
+  </script>
+  <?php endif; ?>
+  
+  <!-- login modal end -->
 
 
     <!-- Back to Top -->
