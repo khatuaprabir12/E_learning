@@ -168,7 +168,8 @@
               </tr>`;
     tableBody1.innerHTML += row;
     this.reset();
-    new bootstrap.Modal(document.getElementById('addCourseModal1')).hide();
+    const modal1 = bootstrap.Modal.getInstance(document.getElementById('addCourseModal1'));
+modal1.hide();
   });
 
   document.getElementById('courseForm2').addEventListener('submit', function (e) {
@@ -181,7 +182,8 @@
               </tr>`;
     tableBody2.innerHTML += row;
     this.reset();
-    new bootstrap.Modal(document.getElementById('addCourseModal2')).hide();
+    const modal2 = bootstrap.Modal.getInstance(document.getElementById('addCourseModal2'));
+modal2.hide();
   });
 </script>
 
