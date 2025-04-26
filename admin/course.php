@@ -54,37 +54,25 @@
             </ul>
         </div>
     </div>
-   <!-- Add Course & Category Modal Trigger -->
+   <!-- Add Course 1 Button -->
 <div class="text-end mt-3">
-  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseCategoryModal">
-    <i class="fas fa-plus"></i> Add Course 2 (working)
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseModal1">
+    <i class="fas fa-plus"></i> Add Course Type 1
   </button>
 </div>
 
-
-
-<!-- Add Course Modal -->
- 1
-<div class="modal fade" id="addCourseCategoryModal" tabindex="-1" aria-labelledby="addCourseCategoryModalLabel" aria-hidden="true">
+<!-- Add Course 1 Modal -->
+<div class="modal fade" id="addCourseModal1" tabindex="-1" aria-labelledby="addCourseModalLabel1" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" id="addCourseCategoryForm">
+    <form class="modal-content" id="courseForm1">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCourseCategoryModalLabel">Add Course</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="addCourseModalLabel1">Add Course Type 1</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <div class="mb-3">
-          <label for="courseTitle" class="form-label">Course Title</label>
-          <input type="text" class="form-control" id="courseTitle" required />
-        </div>
-        <div class="mb-3">
-          <label for="categoryName" class="form-label">Category Name</label>
-          <input type="text" class="form-control" id="categoryName" required />
-        </div>
-        <div class="mb-3">
-          <label for="courseDuration" class="form-label">Duration</label>
-          <input type="text" class="form-control" id="courseDuration" required />
-        </div>
+        <input type="text" class="form-control mb-2" id="courseTitle1" placeholder="Course Title" required />
+        <input type="text" class="form-control mb-2" id="categoryName1" placeholder="Category Name" required />
+        <input type="text" class="form-control" id="courseDuration1" placeholder="Duration" required />
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Add Course</button>
@@ -93,59 +81,49 @@
   </div>
 </div>
 
-
-
-
-   <!-- Combined Courses and Categories Table -->
+<!-- Course 1 Table -->
 <div class="card mt-4">
   <div class="card-header bg-primary text-white">
-    <h5 class="mb-0">Courses & Categories</h5>
+    <h5 class="mb-0">Course Type 1 Table</h5>
   </div>
   <div class="card-body">
     <table class="table table-bordered">
       <thead class="table-light">
         <tr>
-          <th>Serial_no</th>
-          <th>Course Title</th>
-          <th>Category Name</th>
+          <th>#</th>
+          <th>Title</th>
+          <th>Category</th>
           <th>Duration</th>
-          <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="courseCategoryTable">
-        <!-- Dynamic rows will be inserted here -->
+      <tbody id="tableBody1">
+        <!-- Course 1 data here -->
       </tbody>
     </table>
   </div>
 </div>
-<!-- Add Course & Category Modal Trigger -->
+
+<hr>
+
+<!-- Add Course 2 Button -->
 <div class="text-end mt-3">
-  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseCategoryModal">
-    <i class="fas fa-plus"></i> Add Course 2 (working)
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseModal2">
+    <i class="fas fa-plus"></i> Add Course Type 2
   </button>
 </div>
-<!-- Add Course Modal -->
- 2
-<div class="modal fade" id="addCourseCategoryModal" tabindex="-1" aria-labelledby="addCourseCategoryModalLabel" aria-hidden="true">
+
+<!-- Add Course 2 Modal -->
+<div class="modal fade" id="addCourseModal2" tabindex="-1" aria-labelledby="addCourseModalLabel2" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" id="addCourseCategoryForm">
+    <form class="modal-content" id="courseForm2">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCourseCategoryModalLabel">Add Course</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="addCourseModalLabel2">Add Course Type 2</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <div class="mb-3">
-          <label for="courseTitle" class="form-label">Course Title</label>
-          <input type="text" class="form-control" id="courseTitle" required />
-        </div>
-        <div class="mb-3">
-          <label for="categoryName" class="form-label">Category Name</label>
-          <input type="text" class="form-control" id="categoryName" required />
-        </div>
-        <div class="mb-3">
-          <label for="courseDuration" class="form-label">Duration</label>
-          <input type="text" class="form-control" id="courseDuration" required />
-        </div>
+        <input type="text" class="form-control mb-2" id="courseTitle2" placeholder="Course Title" required />
+        <input type="text" class="form-control mb-2" id="categoryName2" placeholder="Category Name" required />
+        <input type="text" class="form-control" id="courseDuration2" placeholder="Duration" required />
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Add Course</button>
@@ -154,30 +132,58 @@
   </div>
 </div>
 
-
-
-   <!-- Combined Courses and Categories Table -->
-   <div class="card mt-4">
-  <div class="card-header bg-primary text-white">
-    <h5 class="mb-0">Courses & Categories</h5>
+<!-- Course 2 Table -->
+<div class="card mt-4">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Course Type 2 Table</h5>
   </div>
   <div class="card-body">
     <table class="table table-bordered">
       <thead class="table-light">
         <tr>
-          <th>Serial_no</th>
-          <th>Course Title</th>
-          <th>Category Name</th>
+          <th>#</th>
+          <th>Title</th>
+          <th>Category</th>
           <th>Duration</th>
-          <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="courseCategoryTable">
-        <!-- Dynamic rows will be inserted here -->
+      <tbody id="tableBody2">
+        <!-- Course 2 data here -->
       </tbody>
     </table>
   </div>
 </div>
+
+
+<script>
+  let count1 = 1, count2 = 1;
+
+  document.getElementById('courseForm1').addEventListener('submit', function (e) {
+    e.preventDefault();
+    let row = `<tr>
+                <td>${count1++}</td>
+                <td>${courseTitle1.value}</td>
+                <td>${categoryName1.value}</td>
+                <td>${courseDuration1.value}</td>
+              </tr>`;
+    tableBody1.innerHTML += row;
+    this.reset();
+    new bootstrap.Modal(document.getElementById('addCourseModal1')).hide();
+  });
+
+  document.getElementById('courseForm2').addEventListener('submit', function (e) {
+    e.preventDefault();
+    let row = `<tr>
+                <td>${count2++}</td>
+                <td>${courseTitle2.value}</td>
+                <td>${categoryName2.value}</td>
+                <td>${courseDuration2.value}</td>
+              </tr>`;
+    tableBody2.innerHTML += row;
+    this.reset();
+    new bootstrap.Modal(document.getElementById('addCourseModal2')).hide();
+  });
+</script>
 
 
 <!-- Bootstrap JS CDN -->
