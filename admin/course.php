@@ -54,50 +54,45 @@
             </ul>
         </div>
     </div>
-   <!-- Add Course 1 Button -->
+<!-- Add Category Modal (Modal 1) -->
 <div class="text-end mt-3">
-  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseModal1">
-    <i class="fas fa-plus"></i> Add Course Type 1
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+    <i class="fas fa-plus"></i> Add Category
   </button>
 </div>
 
-<!-- Add Course 1 Modal -->
-<div class="modal fade" id="addCourseModal1" tabindex="-1" aria-labelledby="addCourseModalLabel1" aria-hidden="true">
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" id="courseForm1">
+    <form class="modal-content" id="categoryForm">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCourseModalLabel1">Add Course Type 1</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <input type="text" class="form-control mb-2" id="courseTitle1" placeholder="Course Title" required />
-        <input type="text" class="form-control mb-2" id="categoryName1" placeholder="Category Name" required />
-        <input type="text" class="form-control" id="courseDuration1" placeholder="Duration" required />
+        <input type="text" class="form-control mb-2" id="categoryName" placeholder="Category Name" required />
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Add Course</button>
+        <button type="submit" class="btn btn-primary">Add Category</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Course 1 Table -->
+<!-- Category Table -->
 <div class="card mt-4">
   <div class="card-header bg-primary text-white">
-    <h5 class="mb-0">Course Type 1 Table</h5>
+    <h5 class="mb-0">Category Table</h5>
   </div>
   <div class="card-body">
     <table class="table table-bordered">
       <thead class="table-light">
         <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Duration</th>
+          <th>Category_id</th>
+          <th>Category Name</th>
         </tr>
       </thead>
-      <tbody id="tableBody1">
-        <!-- Course 1 data here -->
+      <tbody id="categoryTableBody">
+        <!-- Categories will be inserted here -->
       </tbody>
     </table>
   </div>
@@ -105,25 +100,23 @@
 
 <hr>
 
-<!-- Add Course 2 Button -->
+<!-- Add Course Modal (Modal 2) -->
 <div class="text-end mt-3">
-  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseModal2">
-    <i class="fas fa-plus"></i> Add Course Type 2
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+    <i class="fas fa-plus"></i> Add Course
   </button>
 </div>
 
-<!-- Add Course 2 Modal -->
-<div class="modal fade" id="addCourseModal2" tabindex="-1" aria-labelledby="addCourseModalLabel2" aria-hidden="true">
+<div class="modal fade" id="addCourseModal" tabindex="-1" aria-labelledby="addCourseModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" id="courseForm2">
+    <form class="modal-content" id="courseForm">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCourseModalLabel2">Add Course Type 2</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <h5 class="modal-title" id="addCourseModalLabel">Add Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <input type="text" class="form-control mb-2" id="courseTitle2" placeholder="Course Title" required />
-        <input type="text" class="form-control mb-2" id="categoryName2" placeholder="Category Name" required />
-        <input type="text" class="form-control" id="courseDuration2" placeholder="Duration" required />
+        <input type="text" class="form-control mb-2" id="courseTitle" placeholder="Course Title" required />
+        <textarea class="form-control" id="courseDescription" placeholder="Course Description" rows="4" required></textarea>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Add Course</button>
@@ -132,60 +125,57 @@
   </div>
 </div>
 
-<!-- Course 2 Table -->
+<!-- Course Table -->
 <div class="card mt-4">
   <div class="card-header bg-success text-white">
-    <h5 class="mb-0">Course Type 2 Table</h5>
+    <h5 class="mb-0">Course Table</h5>
   </div>
   <div class="card-body">
     <table class="table table-bordered">
       <thead class="table-light">
         <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Duration</th>
+          <th>Course_id</th>
+          <th>Course Title</th>
+          <th>Course Description</th>
         </tr>
       </thead>
-      <tbody id="tableBody2">
-        <!-- Course 2 data here -->
+      <tbody id="courseTableBody">
+        <!-- Courses will be inserted here -->
       </tbody>
     </table>
   </div>
 </div>
 
-
+<!-- JavaScript -->
 <script>
-  let count1 = 1, count2 = 1;
+  let categoryCount = 1, courseCount = 1;
 
-  document.getElementById('courseForm1').addEventListener('submit', function (e) {
+  document.getElementById('categoryForm').addEventListener('submit', function (e) {
     e.preventDefault();
     let row = `<tr>
-                <td>${count1++}</td>
-                <td>${courseTitle1.value}</td>
-                <td>${categoryName1.value}</td>
-                <td>${courseDuration1.value}</td>
+                <td>${categoryCount++}</td>
+                <td>${categoryName.value}</td>
               </tr>`;
-    tableBody1.innerHTML += row;
+    categoryTableBody.innerHTML += row;
     this.reset();
-    const modal1 = bootstrap.Modal.getInstance(document.getElementById('addCourseModal1'));
-modal1.hide();
+    const categoryModal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
+    categoryModal.hide();
   });
 
-  document.getElementById('courseForm2').addEventListener('submit', function (e) {
+  document.getElementById('courseForm').addEventListener('submit', function (e) {
     e.preventDefault();
     let row = `<tr>
-                <td>${count2++}</td>
-                <td>${courseTitle2.value}</td>
-                <td>${categoryName2.value}</td>
-                <td>${courseDuration2.value}</td>
+                <td>${courseCount++}</td>
+                <td>${courseTitle.value}</td>
+                <td>${courseDescription.value}</td>
               </tr>`;
-    tableBody2.innerHTML += row;
+    courseTableBody.innerHTML += row;
     this.reset();
-    const modal2 = bootstrap.Modal.getInstance(document.getElementById('addCourseModal2'));
-modal2.hide();
+    const courseModal = bootstrap.Modal.getInstance(document.getElementById('addCourseModal'));
+    courseModal.hide();
   });
 </script>
+
 
 
 <!-- Bootstrap JS CDN -->
