@@ -3,11 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
 -- Generation Time: Apr 23, 2025 at 02:39 PM
-=======
 -- Generation Time: Apr 23, 2025 at 01:43 PM
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,36 +30,29 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `students` (
   `id` int(11) NOT NULL,
-<<<<<<< HEAD
   `student_id` varchar(50) DEFAULT NULL,
-=======
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
   `student_name` varchar(100) DEFAULT NULL,
   `father_name` varchar(100) DEFAULT NULL,
   `mobile` varchar(15) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `address` text DEFAULT NULL,
-<<<<<<< HEAD
   `city` varchar(50) DEFAULT NULL,
   `district` varchar(50) DEFAULT NULL,
   `state` varchar(50) DEFAULT NULL,
   `pin_code` varchar(6) DEFAULT NULL,
   `gender` varchar(10) DEFAULT NULL,
-=======
   `city` varchar(100) DEFAULT NULL,
   `district` varchar(100) DEFAULT NULL,
   `state` varchar(100) DEFAULT NULL,
   `pin_code` varchar(6) DEFAULT NULL,
   `gender` varchar(20) DEFAULT NULL,
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
   `dob` date DEFAULT NULL,
   `caste` varchar(20) DEFAULT NULL,
   `religion` varchar(50) DEFAULT NULL,
   `nationality` varchar(50) DEFAULT NULL,
   `aadhaar` varchar(16) DEFAULT NULL,
   `qualification` varchar(100) DEFAULT NULL,
-<<<<<<< HEAD
   `course` varchar(100) DEFAULT NULL,
   `profile_image` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
@@ -77,14 +67,13 @@ INSERT INTO `students` (`id`, `student_id`, `student_name`, `father_name`, `mobi
 (2, 'TBNYCTC-02-2025-04', 'prabir', 'prabodh', '9564726559', 'prabir@gmail.com', '$2y$10$rOCZtVFvHy.M.b2PbHfsdOrw6CHfpa3JP9hFdffL81sHb8EaG4bk2', 'shsdd', 'sdsd', 'sdfsv', 'Jharkhand', '992222', 'Male', '5455-05-04', 'general', 'hindu', 'indian', '4455552222222222', 'b.tech', 'Diploma in Modern Computer Office Application (1 Year)', '1745411434_Signature.jpg', '2025-04-23 18:00:34');
 
 --
-=======
+
   `profile_image` varchar(255) DEFAULT NULL,
   `course` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
 -- Indexes for dumped tables
 --
 
@@ -92,12 +81,10 @@ INSERT INTO `students` (`id`, `student_id`, `student_name`, `father_name`, `mobi
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-<<<<<<< HEAD
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `student_id` (`student_id`);
-=======
   ADD PRIMARY KEY (`id`);
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
+
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -107,11 +94,8 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-=======
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
->>>>>>> 76d12223fd16b843c9990ce46ae93bb46c1805ca
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
