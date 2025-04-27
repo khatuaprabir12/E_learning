@@ -2,7 +2,7 @@
 // edit_category_submit.php
 
 session_start();
-include 'connection.php';
+include '../connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoryId = intval($_POST['category_id']);

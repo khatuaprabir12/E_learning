@@ -5,7 +5,7 @@
 session_start();
 
 // Include database connection
-include 'connection.php'; // Correct path
+include '../connection.php'; // Correct path
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $categoryName = trim($_POST['categoryName']);

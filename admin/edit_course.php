@@ -1,6 +1,6 @@
 <?php
 // edit_course.php
-include 'connection.php'; // <-- Your DB connection file
+include '../connection.php'; // <-- Your DB connection file
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collect form data safely

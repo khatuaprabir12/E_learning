@@ -66,7 +66,7 @@
       }
 
       // Include your database connection
-      include 'connection.php'; // Correct path
+      include '../connection.php'; // Correct path
 
       // Fetch categories from database
       $categories = [];

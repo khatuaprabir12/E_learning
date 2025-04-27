@@ -52,79 +52,241 @@
         </div>
       </div>
 
+
+      <?php 
+      session_start();
+      if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_GET['success'])): ?>
+    <div class="alert alert-success">
+        Student registered successfully!
+    </div>
+<?php endif;
+ ?>
+
+
       <!-- Student Table Section -->
       <div class="d-flex justify-content-between align-items-center mb-4 px-4">
-        <h4 class="mb-0">Student List</h4>
-        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addStudentModal">
-          <i class="fas fa-user-plus me-1"></i> Add Student
-        </button>
-      </div>
+  <h4 class="mb-0">Student List</h4>
+  <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+    <i class="fas fa-user-plus me-1"></i> Add Student
+  </button>
+</div>
 
-      <div class="container">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <table class="table table-bordered table-hover">
-              <thead class="table-light">
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Enrollment Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="studentTable">
-                <!-- Sample row -->
-                <tr>
-                  <td>1</td>
-                  <td>Jane Doe</td>
-                  <td>jane@example.com</td>
-                  <td>+1234567890</td>
-                  <td>2025-04-20</td>
-                  <td>
-                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+<div class="container">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Father Name</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>Course</th>
+            <th>Profile Image</th>
+            <th>Approved</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="studentTable">
+          <?php
+          include '../connection.php';
+          
+          $students = [];
+          $sql = "SELECT * FROM students ORDER BY id DESC";
+          $result = $connect->query($sql);
+
+          if ($result && $result->num_rows > 0) {
+              $students = $result->fetch_all(MYSQLI_ASSOC);
+          }
+
+          if (!empty($students)):
+            $serial = 1;
+            foreach ($students as $student):
+          ?>
+          <tr>
+            <td><?php echo $serial++; ?></td>
+            <td><?php echo htmlspecialchars($student['student_id']); ?></td>
+            <td><?php echo htmlspecialchars($student['student_name']); ?></td>
+            <td><?php echo htmlspecialchars($student['father_name']); ?></td>
+            <td><?php echo htmlspecialchars($student['mobile']); ?></td>
+            <td><?php echo htmlspecialchars($student['email']); ?></td>
+            <td><?php echo htmlspecialchars($student['course']); ?></td>
+            <td>
+              <?php if (!empty($student['profile_image'])): ?>
+                <img src="../uploads/<?php echo htmlspecialchars($student['profile_image']); ?>" alt="Profile" width="50">
+              <?php else: ?>
+                <span class="text-muted">No Image</span>
+              <?php endif; ?>
+            </td>
+            <td>
+              <?php if ($student['approved']): ?>
+                <span class="badge bg-success">Yes</span>
+              <?php else: ?>
+                <span class="badge bg-secondary">No</span>
+              <?php endif; ?>
+            </td>
+            <td>
+              <a href="edit_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+              <a href="delete_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');"><i class="fas fa-trash"></i></a>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="10" class="text-center text-muted">No students found.</td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Student Modal -->
+<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"> <!-- bigger modal -->
+    <form class="modal-content" action="add_student.php" method="POST" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="studentName" class="form-label">Full Name</label>
+            <input type="text" name="student_name" class="form-control" id="studentName" required>
           </div>
-        </div>
+
+          <div class="col-md-6">
+            <label for="fatherName" class="form-label">Father's Name</label>
+            <input type="text" name="father_name" class="form-control" id="fatherName" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="mobile" class="form-label">Mobile</label>
+            <input type="tel" name="mobile" class="form-control" id="mobile" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="email" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input type="date" name="dob" class="form-control" id="dob" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="gender" class="form-label">Gender</label>
+            <select name="gender" id="gender" class="form-select" required>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="aadhaar" class="form-label">Aadhaar Number</label>
+            <input type="text" name="aadhaar" class="form-control" id="aadhaar">
+          </div>
+
+          <div class="col-md-6">
+            <label for="qualification" class="form-label">Qualification</label>
+            <input type="text" name="qualification" class="form-control" id="qualification">
+          </div>
+
+          <div class="col-md-6">
+            <label for="course" class="form-label">Course</label>
+            <select name="course" class="form-select" id="course" required>
+              <option value="">Select Course</option>
+              
+              
+              <?php
+              $courseQuery = "SELECT category_id, category_name FROM course_category";
+              $result = mysqli_query($connect, $courseQuery);
+
+              if ($result && mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo '<option value="' . htmlspecialchars($row['id']) . '">' . htmlspecialchars($row['category_name']) . '</option>';
+                }
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="caste" class="form-label">Caste</label>
+            <input type="text" name="caste" class="form-control" id="caste">
+          </div>
+
+          <div class="col-md-6">
+            <label for="religion" class="form-label">Religion</label>
+            <input type="text" name="religion" class="form-control" id="religion">
+          </div>
+
+          <div class="col-md-6">
+            <label for="nationality" class="form-label">Nationality</label>
+            <input type="text" name="nationality" class="form-control" id="nationality" value="Indian">
+          </div>
+
+          <div class="col-md-6">
+            <label for="city" class="form-label">City</label>
+            <input type="text" name="city" class="form-control" id="city">
+          </div>
+
+          <div class="col-md-6">
+            <label for="district" class="form-label">District</label>
+            <input type="text" name="district" class="form-control" id="district">
+          </div>
+
+          <div class="col-md-6">
+            <label for="state" class="form-label">State</label>
+            <input type="text" name="state" class="form-control" id="state">
+          </div>
+
+          <div class="col-md-6">
+            <label for="pinCode" class="form-label">Pin Code</label>
+            <input type="text" name="pin_code" class="form-control" id="pinCode">
+          </div>
+
+          <div class="col-md-12">
+            <label for="address" class="form-label">Address</label>
+            <textarea name="address" id="address" class="form-control" rows="2"></textarea>
+          </div>
+
+          <div class="col-md-12">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <input type="file" name="profile_image" class="form-control" id="profileImage" accept="image/*">
+          </div>
+        </div> <!-- row -->
       </div>
 
-      <!-- Add Student Modal -->
-      <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <form class="modal-content" id="studentForm">
-            <div class="modal-header">
-              <h5 class="modal-title">Add New Student</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="studentName" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="studentName" required>
-              </div>
-              <div class="mb-3">
-                <label for="studentEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="studentEmail" required>
-              </div>
-              <div class="mb-3">
-                <label for="studentPhone" class="form-label">Phone</label>
-                <input type="tel" class="form-control" id="studentPhone" required>
-              </div>
-              <div class="mb-3">
-                <label for="enrollDate" class="form-label">Enrollment Date</label>
-                <input type="date" class="form-control" id="enrollDate" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-success">Save Student</button>
-            </div>
-          </form>
-        </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Save Student</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
       </div>
+    </form>
+  </div>
+</div>
+
+
+
 
     </div> <!-- End col-md-10 -->
   </div> <!-- End row -->

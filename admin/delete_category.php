@@ -2,7 +2,7 @@
 session_start();
 
 // Include database connection
-include 'connection.php';
+include '../connection.php';
 
 // Check if category ID is provided
 if (isset($_POST['category_id'])) {
