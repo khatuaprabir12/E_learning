@@ -77,8 +77,24 @@
           $categories = $result->fetch_all(MYSQLI_ASSOC);
       }
       ?>
+ 
+<?php
+// Fetch courses from database
+$courses = [];
+$sql = "SELECT c.*, cat.category_name 
+        FROM course c
+        JOIN course_category cat ON c.category_id = cat.category_id
+        ORDER BY c.course_id DESC";
 
-      <!-- Student Table Section -->
+$result = $connect->query($sql);
+
+if ($result && $result->num_rows > 0) {
+    $courses = $result->fetch_all(MYSQLI_ASSOC);
+}
+?>
+
+
+      <!-- course category Section -->
       <div class="d-flex justify-content-between align-items-center mb-4 px-4">
         <h4 class="mb-0">Category List</h4>
         <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
@@ -121,6 +137,67 @@
           </div>
         </div>
       </div>
+      
+
+      <!-- Course Section -->
+      <div class="d-flex justify-content-between align-items-center my-4 px-4">
+        <h4 class="mb-0">Course List</h4>
+          <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+            <i class="fas fa-plus-circle me-1"></i> Add Course
+          </button>
+      </div>
+
+<div class="container">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Serial No.</th>
+            <th>Course Title</th>
+            <th>Course Description</th>
+            <th>Course Duration</th>
+            <th>Course Image</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="courseTableBody">
+          <?php if (!empty($courses)): ?>
+            <?php $serial = 1; ?>
+            <?php foreach ($courses as $course): ?>
+              <tr>
+                <td><?php echo $serial++; ?></td>
+                <td><?php echo htmlspecialchars($course['course_title']); ?></td>
+                <td><?php echo htmlspecialchars($course['course_description']); ?></td>
+                <td><?php echo htmlspecialchars($course['course_duration']); ?></td>
+                <td>
+                  <?php if (!empty($course['course_image'])): ?>
+                    <img src="uploads/<?php echo htmlspecialchars($course['course_image']); ?>" alt="Course Image" width="80" height="80">
+                  <?php else: ?>
+                    <span class="text-muted">No image</span>
+                  <?php endif; ?>
+                </td>
+                <td><?php echo htmlspecialchars($course['category_name']); ?></td>
+                <td>
+                  <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editCourseModal<?php echo $course['course_id']; ?>"><i class="fas fa-edit"></i> Edit</button>
+                  <a href="delete_course.php?id=<?php echo $course['course_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this course?');">
+                    <i class="fas fa-trash"></i> Delete
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="7" class="text-center text-muted">No courses available.</td> <!-- Correct colspan -->
+            </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 
       <!-- Add Category Modal -->
       <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
@@ -139,6 +216,38 @@
           </form>
         </div>
       </div>
+
+      <!-- Add Course Modal -->
+      <div class="modal fade" id="addCourseModal" tabindex="-1" aria-labelledby="addCourseModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="course_submit.php" method="POST" enctype="multipart/form-data" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCourseModalLabel">Add New Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control mb-3" name="courseName" placeholder="Enter Course Name" required />
+        
+        <textarea class="form-control mb-3" name="courseDescription" placeholder="Enter Course Description" rows="3" required></textarea>
+
+        <input type="text" class="form-control mb-3" name="courseDuration" placeholder="Enter Course Duration (e.g., 3 months)" required />
+
+        <input type="file" class="form-control mb-3" name="courseImage" accept="image/*" />
+
+        <select class="form-select mb-3" name="categoryId" required>
+          <option value="" disabled selected>Select Category</option>
+          <?php foreach ($categories as $category): ?>
+            <option value="<?php echo $category['category_id']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save Course</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
       <!-- Edit Category Modal -->
       <?php foreach ($categories as $category): ?>
@@ -161,9 +270,75 @@
         </div>
       <?php endforeach; ?>
 
+   <!-- Edit Course Modals -->
+<?php foreach ($courses as $course): ?>
+<div class="modal fade" id="editCourseModal<?php echo $course['course_id']; ?>" tabindex="-1" aria-labelledby="editCourseModalLabel<?php echo $course['course_id']; ?>" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="edit_course.php" method="POST" enctype="multipart/form-data" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editCourseModalLabel<?php echo $course['course_id']; ?>">Edit Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" name="course_id" value="<?php echo $course['course_id']; ?>">
+
+        <div class="mb-3">
+          <label for="courseTitle" class="form-label">Course Title</label>
+          <input type="text" class="form-control" name="course_title" value="<?php echo htmlspecialchars($course['course_title']); ?>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="courseDescription" class="form-label">Course Description</label>
+          <textarea class="form-control" name="course_description" rows="3" required><?php echo htmlspecialchars($course['course_description']); ?></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="courseDuration" class="form-label">Course Duration</label>
+          <input type="text" class="form-control" name="course_duration" value="<?php echo htmlspecialchars($course['course_duration']); ?>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="courseImage" class="form-label">Course Image</label><br>
+          <?php if (!empty($course['course_image'])): ?>
+            <img src="uploads/<?php echo htmlspecialchars($course['course_image']); ?>" alt="Course Image" width="50" height="50" class="mb-2">
+          <?php endif; ?>
+          <input type="file" class="form-control" name="course_image">
+          <small class="text-muted">Leave blank if you don't want to change the image.</small>
+        </div>
+
+        <div class="mb-3">
+          <label for="categoryId" class="form-label">Category</label>
+          <select class="form-select" name="category_id" required>
+            <option value="" disabled>Select Category</option>
+            <?php foreach ($categories as $category): ?>
+              <option value="<?php echo $category['category_id']; ?>" <?php echo ($category['category_name'] == $course['category_name']) ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($category['category_name']); ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning">Update Course</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+<?php endforeach; ?>
+
+
     </div> <!-- End col-md-10 -->
   </div> <!-- End row -->
 </div> <!-- End container-fluid -->
+
+
+<!-- course section -->
+
+
 
 <!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
