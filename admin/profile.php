@@ -1,18 +1,50 @@
 <?php
 session_start();
-// include 'connection.php'; // Uncomment if you have db connection
 
+// Include the database connection
+include 'connection.php';
+
+// Assume admin ID = 1 (or use session data if admin is logged in)
+$admin_id = 1; 
+
+// Fetch admin data
+$sql = "SELECT * FROM admin WHERE id = ?";
+$stmt = $connect->prepare($sql);
+$stmt->bind_param("i", $admin_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
+
+// If form is submitted, update the profile
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $adminName = $_POST['adminName'];
     $adminEmail = $_POST['adminEmail'];
     $adminPassword = $_POST['adminPassword'];
 
-    // Save to database here if needed (not included)
-    $_SESSION['success'] = "Profile updated successfully!";
-    header("Location: profile.php");
+    // Hash the password if it's updated
+    if (!empty($adminPassword)) {
+        $adminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
+    } else {
+        // If password is not changed, retain the current password
+        $adminPassword = $admin['password'];
+    }
+
+    // Update the database
+    $updateSql = "UPDATE admin SET username = ?, password = ? WHERE id = ?";
+    $stmt = $connect->prepare($updateSql);
+    $stmt->bind_param("ssi", $adminName, $adminPassword, $admin_id);
+
+    if ($stmt->execute()) {
+        $_SESSION['success'] = "Profile updated successfully!";
+    } else {
+        $_SESSION['error'] = "Failed to update profile.";
+    }
+
+    header("Location: profile.php"); // Redirect to the same page after the update
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="container py-5">
   <h2 class="mb-4">Admin Profile</h2>
 
+  <!-- Success or error message -->
   <?php if (isset($_SESSION['success'])): ?>
     <div class="alert alert-success">
       <?php 
@@ -34,17 +67,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       ?>
     </div>
   <?php endif; ?>
+  
+  <?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+      <?php 
+        echo $_SESSION['error']; 
+        unset($_SESSION['error']);
+      ?>
+    </div>
+  <?php endif; ?>
 
   <div class="card p-4 shadow-sm">
     <form action="profile.php" method="post">
       <div class="mb-3">
         <label for="adminName" class="form-label">Name</label>
-        <input type="text" class="form-control" id="adminName" name="adminName" value="Admin Name" required>
+        <input type="text" class="form-control" id="adminName" name="adminName" value="<?php echo $admin['username']; ?>" required>
       </div>
 
       <div class="mb-3">
         <label for="adminEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="adminEmail" name="adminEmail" value="admin@example.com" required>
+        <input type="email" class="form-control" id="adminEmail" name="adminEmail" value="<?php echo $admin['username']; ?>" required>
       </div>
 
       <div class="mb-3">
