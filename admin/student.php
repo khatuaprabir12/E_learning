@@ -67,6 +67,17 @@
     </div>
 <?php endif;
  ?>
+ <?php
+if (isset($_SESSION['success'])) {
+    echo '<div class="alert alert-success">'.$_SESSION['success'].'</div>';
+    unset($_SESSION['success']);
+}
+if (isset($_SESSION['error'])) {
+    echo '<div class="alert alert-danger">'.$_SESSION['error'].'</div>';
+    unset($_SESSION['error']);
+}
+?>
+
 
 
       <!-- Student Table Section -->
@@ -127,12 +138,15 @@
               <?php endif; ?>
             </td>
             <td>
-              <?php if ($student['approved']): ?>
-                <span class="badge bg-success">Yes</span>
-              <?php else: ?>
-                <span class="badge bg-secondary">No</span>
-              <?php endif; ?>
+              <div class="form-check form-switch">
+                <input class="form-check-input approve-switch" type="checkbox" role="switch" id="approveSwitch<?php echo $student['id']; ?>"
+                  data-student-id="<?php echo $student['id']; ?>"
+                   <?php echo $student['approved'] ? 'checked' : ''; ?>
+                >
+              </div>
             </td>
+
+
             <td>
               <a href="edit_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
               <a href="delete_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');"><i class="fas fa-trash"></i></a>
@@ -288,12 +302,55 @@
 
 
 
+
+
+
     </div> <!-- End col-md-10 -->
   </div> <!-- End row -->
 </div> <!-- End container-fluid -->
 
+
+<script>
+document.querySelectorAll('.approve-switch').forEach(function(switchInput) {
+    switchInput.addEventListener('change', function() {
+        const studentId = this.getAttribute('data-student-id');
+        const approved = this.checked ? 1 : 0;
+
+        fetch('update_approve.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `student_id=${studentId}&approved=${approved}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            Swal.fire({
+                title: 'Success!',
+                text: data,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                location.reload(); // Reload after user clicks OK
+            });
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something went wrong. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+
 <!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script/add.js"></script>
 
 
 </body>
