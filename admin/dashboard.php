@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Admin details (assuming admin is already logged in)
+$adminName = isset($_SESSION['admin_name']) ? $_SESSION['admin_name'] : '';
+
+// Check if logout message is set in the session
+if (isset($_SESSION['logout_message'])) {
+    $logoutMessage = $_SESSION['logout_message'];
+    unset($_SESSION['logout_message']);  // Unset after showing the message
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,41 +51,31 @@
     <!-- Main Content -->
     <div class="col-md-10 p-4">
 
-      <?php
-      session_start();
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $dbname = "edufuture_academy";
-
-      // Database connection
-      $connect = new mysqli($servername, $username, $password, $dbname);
-      if ($connect->connect_error) {
-          die("Connection failed: " . $connect->connect_error);
-      }
-
-      // Assume admin id = 1
-      $admin_id = 1;
-
-      // Fetch admin name
-      if (!isset($_SESSION['admin_name'])) {
-          $sql = "SELECT username FROM admin WHERE id = ?";
-          $stmt = $connect->prepare($sql);
-          $stmt->bind_param("i", $admin_id);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          $admin = $result->fetch_assoc();
-          $_SESSION['admin_name'] = $admin['username'];
-      }
-
-      $adminName = $_SESSION['admin_name'];
-      ?>
-
       <!-- Top Navbar -->
       <div class="dashboard-header d-flex justify-content-between align-items-center mb-4 px-4 py-3 bg-info text-white rounded shadow-sm">
-        <h4>Welcome, <?php echo htmlspecialchars($adminName); ?></h4>
+        <h4 id="welcomeMessage">Welcome <?php echo htmlspecialchars($adminName); ?></h4>
+        
+      <!-- ✅ Insert the alert here -->
+      <?php if (!empty($logoutMessage)): ?>
+          <div class="alert alert-success mt-2 alert-dismissible fade show" role="alert">
+              <?php echo htmlspecialchars($logoutMessage); ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <script>
+              setTimeout(function() {
+                  var alertElement = document.querySelector('.alert');
+                  if (alertElement) {
+                      var bsAlert = new bootstrap.Alert(alertElement);
+                      bsAlert.close();
+                  }
+              }, 3000);
+          </script>
+      <?php endif; ?>
+        
+        
+
         <div class="dropdown">
-          <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="adminDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <a href="logout.php" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="adminDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user-circle fa-2x"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
@@ -149,4 +152,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
+
