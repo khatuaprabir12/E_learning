@@ -1,14 +1,15 @@
 <?php
 session_start();
 
-// Destroy all sessions
-$_SESSION = [];
+// Destroy session variables
+session_unset();
 session_destroy();
 
-// Set a session variable for the logout message
-$_SESSION['logout_message'] = 'You have successfully logged out.';
+// Start a new session (to store logout message)
+session_start();
+$_SESSION['logout_message'] = "You have successfully logged out.";
 
-// Redirect to dashboard.php to display the logout message
+// Redirect to dashboard
 header("Location: dashboard.php");
 exit();
 ?>
