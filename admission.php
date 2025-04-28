@@ -332,26 +332,44 @@ session_start(); // Make sure this is at the very top of the file
 
 
           <!-- Course Selection -->
-<div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3">
   <label for="course" class="form-label fw-semibold">Select a Course</label>
-  <select name="course" id="course" class="form-select  shadow-sm" required>
+  <select name="course" id="course" class="form-select shadow-sm" required>
     <option value="">-- Select Course --</option>
 
-    <optgroup label="📚 Certificate of Diploma">
-      <option value="Diploma in Modern Computer Office Application (1 Year)">Diploma in Modern Computer Office Application (1 Year)</option>
-      <option value="Diploma in Computer Application & Programming (1 Year)">Diploma in Computer Application & Programming (1 Year)</option>
-      <option value="Diploma in Computer Office Application (1 Year)">Diploma in Computer Office Application (1 Year)</option>
-    </optgroup>
+    <?php
+    // Connect to database
+    include 'connection.php'; // your DB connection file
 
-    <optgroup label="🗣️ Language Courses">
-      <option value="Communicative English (6 Months)">Communicative English (6 Months)</option>
-    </optgroup>
+    // Fetch all course categories
+    $categoryQuery = "SELECT * FROM course_category ORDER BY category_name ASC";
+    $categoryResult = mysqli_query($connect, $categoryQuery);
 
-    <optgroup label="📄 Certificate of Accounting">
-      <option value="Certificate of Tally (6 Months)">Certificate of Tally (6 Months)</option>
-    </optgroup>
+    if (mysqli_num_rows($categoryResult) > 0) {
+      while ($category = mysqli_fetch_assoc($categoryResult)) {
+        echo '<optgroup label="' . htmlspecialchars($category['category_name']) . '">';
+
+        // Fetch courses under this category
+        $courseQuery = "SELECT * FROM course WHERE category_id = " . intval($category['category_id']);
+        $courseResult = mysqli_query($connect, $courseQuery);
+
+        if (mysqli_num_rows($courseResult) > 0) {
+          while ($course = mysqli_fetch_assoc($courseResult)) {
+            echo '<option value="' . htmlspecialchars($course['course_title']) . '">' . htmlspecialchars($course['course_title']) . '</option>';
+          }
+        } else {
+          echo '<option disabled>No courses available</option>';
+        }
+
+        echo '</optgroup>';
+      }
+    } else {
+      echo '<option disabled>No course categories found</option>';
+    }
+    ?>
   </select>
 </div>
+
 
             <!-- Link to Open Login Modal -->
              <!-- Submit Button -->

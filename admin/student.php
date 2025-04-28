@@ -232,15 +232,34 @@ if (isset($_SESSION['error'])) {
               
               
               <?php
-              $courseQuery = "SELECT category_id, category_name FROM course_category";
-              $result = mysqli_query($connect, $courseQuery);
+    
 
-              if ($result && mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                  echo '<option value="' . htmlspecialchars($row['id']) . '">' . htmlspecialchars($row['category_name']) . '</option>';
-                }
-              }
-              ?>
+    // Fetch all course categories
+    $categoryQuery = "SELECT * FROM course_category ORDER BY category_name ASC";
+    $categoryResult = mysqli_query($connect, $categoryQuery);
+
+    if (mysqli_num_rows($categoryResult) > 0) {
+      while ($category = mysqli_fetch_assoc($categoryResult)) {
+        echo '<optgroup label="' . htmlspecialchars($category['category_name']) . '">';
+
+        // Fetch courses under this category
+        $courseQuery = "SELECT * FROM course WHERE category_id = " . intval($category['category_id']);
+        $courseResult = mysqli_query($connect, $courseQuery);
+
+        if (mysqli_num_rows($courseResult) > 0) {
+          while ($course = mysqli_fetch_assoc($courseResult)) {
+            echo '<option value="' . htmlspecialchars($course['course_title']) . '">' . htmlspecialchars($course['course_title']) . '</option>';
+          }
+        } else {
+          echo '<option disabled>No courses available</option>';
+        }
+
+        echo '</optgroup>';
+      }
+    } else {
+      echo '<option disabled>No course categories found</option>';
+    }
+    ?>
             </select>
           </div>
 
