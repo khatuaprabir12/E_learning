@@ -175,7 +175,7 @@ session_start(); // Make sure this is at the very top of the file
 
             <div class="col-md-6">
               <label class="form-label">Student Name</label>
-              <input type="text" name="student_name" id="signupName" onkeyup="namevalid()"class="form-control" required>
+              <input type="text" name="student_name" id="signupName" onkeyup="namevalid()"class="form-control"value="<?= isset($studentData['student_name']) ? htmlspecialchars($studentData['student_name']) : '' ?>" required>
               <div class="form-text" id="nameError"></div>
             </div>
 
@@ -483,6 +483,10 @@ session_start(); // Make sure this is at the very top of the file
       </div>
       <form action="authenticate.php" method="POST">
         <div class="modal-body">
+        <?php if(isset($studentData['id'])): ?>
+            <input type="hidden" name="student_id" value="<?= htmlspecialchars($studentData['id']) ?>">
+        <?php endif; ?>
+
           <?php if (isset($_GET['error'])): ?>
             <?php if ($_GET['error'] == 1): ?>
               <div class="alert alert-danger text-center">❌ Invalid Credentials</div>
