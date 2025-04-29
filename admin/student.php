@@ -149,7 +149,7 @@ if (isset($_SESSION['error'])) {
 
             <td>
               <a href="ed_del_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-              <a href="delete_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');"><i class="fas fa-trash"></i></a>
+              <a href="ed_del_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');"><i class="fas fa-trash"></i></a>
             </td>
           </tr>
           <?php endforeach; ?>

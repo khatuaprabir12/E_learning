@@ -337,10 +337,3 @@ if (move_uploaded_file($tmp_name, $target_file)) {
 
 $connect->close();
 ?>
-
-
-
-
-
-
-

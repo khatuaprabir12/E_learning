@@ -45,8 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     header('Location: student.php');
     exit();
+    
 }
+
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -130,3 +135,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
+
+<?php
+// delete_student.php
+session_start();
+include '../connection.php';
+
+if (!isset($_GET['id'])) {
+    $_SESSION['error'] = 'Invalid student ID!';
+    header('Location: student.php');
+    exit();
+}
+
+$student_id = intval($_GET['id']);
+
+// First, delete the profile image if exists (optional)
+$sql = "SELECT profile_image FROM students WHERE id = $student_id";
+$result = mysqli_query($connect, $sql);
+if ($result && mysqli_num_rows($result) > 0) {
+    $student = mysqli_fetch_assoc($result);
+    if (!empty($student['profile_image'])) {
+        // Delete the profile image from the uploads folder
+        $imagePath = "../uploads/" . $student['profile_image'];
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
+}
+
+// Delete the student record from the database
+$delete_sql = "DELETE FROM students WHERE id = $student_id";
+
+if (mysqli_query($connect, $delete_sql)) {
+    $_SESSION['success'] = 'Student deleted successfully!';
+} else {
+    $_SESSION['error'] = 'Failed to delete student!';
+}
+
+header('Location: student.php');
+exit();
+?>
