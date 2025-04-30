@@ -55,12 +55,12 @@ function fathernamevalid() {
   function aadhaarvalid() {
     const phone = document.getElementById("signupAadhaar");
     const error = document.getElementById("aadhaarError");
-    const regex = /^[0-9]{16}$/;
+    const regex = /^[0-9]{12}$/;
   
     if (regex.test(phone.value.trim())) {
       success(phone, error, "Valid Aadhaar number");
     } else {
-      fail(phone, error, "Enter 16 digit number");
+      fail(phone, error, "Enter 12 digit number");
     }
   }
   

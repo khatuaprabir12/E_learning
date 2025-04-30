@@ -316,7 +316,7 @@ session_start(); // Make sure this is at the very top of the file
             </div>
             <div class="col-md-6">
               <label class="form-label">Aadhaar Number</label>
-              <input type="number" name="aadhaar" id="signupAadhaar" onkeyup="aadhaarvalid()" pattern="[0-9]{16}" class="form-control" required>
+              <input type="number" name="aadhaar" id="signupAadhaar" onkeyup="aadhaarvalid()" pattern="[0-9]{12}" class="form-control" required>
               <div class="form-text" id="aadhaarError"></div>
             </div>
 

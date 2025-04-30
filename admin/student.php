@@ -158,6 +158,8 @@ if (isset($_SESSION['error'])) {
 
             <td>
               <a href="ed_del_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');"><i class="fas fa-trash"></i></a>
+              <a href="edit_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-warning" ><i class="fas fa-edit me-1"></i></a>
+
             </td>
           </tr>
           <?php endforeach; ?>
@@ -325,13 +327,13 @@ if (isset($_SESSION['error'])) {
 
 
 
-<!-- Student View Modal -->
+<!-- View Student Modal -->
 <div class="modal fade" id="viewStudentModal" tabindex="-1" aria-labelledby="viewStudentLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content border-0 shadow rounded-4">
       <div class="modal-header bg-primary text-white rounded-top-4">
         <h5 class="modal-title"><i class="fas fa-user-graduate me-2"></i>Student Profile</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body px-5 py-4">
         <div class="text-center mb-4">
@@ -367,121 +369,10 @@ if (isset($_SESSION['error'])) {
       <!-- Modal Footer with Edit Button -->
       <div class="modal-footer bg-light rounded-bottom-4 d-flex justify-content-center gap-3">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-warning editBtn" data-id="<?php echo $student['id']; ?>" data-bs-toggle="modal" data-bs-target="#editStudentModal">
-        <i class="fas fa-edit me-1"></i> Edit
-        </button>
-
       </div>
     </div>
   </div>
 </div>
-
-
-<!-- Edit Student Modal -->
-<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content border-0 shadow rounded-4">
-      <div class="modal-header bg-warning text-white rounded-top-4">
-        <h5 class="modal-title"><i class="fas fa-user-edit me-2"></i>Edit Student</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <form action="edit_student.php" method="post" enctype="multipart/form-data" id="editStudentForm">
-      <div class="modal-body px-5 py-4">
-          <div class="row g-3">
-            <div class="col-md-6">
-            <input type="hidden" class="form-control" id="uid" name="uid" required>
-
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_name" name="name" required>
-                <label for="edit_name">Student Name</label>
-              </div>
-              <div class="form-floating">
-                <input type="email" class="form-control" id="edit_email" name="email" required>
-                <label for="edit_email">Email</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_mobile" name="mobile" required>
-                <label for="edit_mobile">Mobile</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_father" name="father_name">
-                <label for="edit_father">Father's Name</label>
-              </div>
-              <div class="form-floating">
-                <input type="date" class="form-control" id="edit_dob" name="dob">
-                <label for="edit_dob">Date of Birth</label>
-              </div>
-              <div class="form-floating">
-                <select class="form-select" id="edit_gender" name="gender">
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-                <label for="edit_gender">Gender</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_aadhaar" name="aadhaar">
-                <label for="edit_aadhaar">Aadhaar No.</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_qualification" name="qualification">
-                <label for="edit_qualification">Qualification</label>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_course" name="course">
-                <label for="edit_course">Course</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_religion" name="religion">
-                <label for="edit_religion">Religion</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_nationality" name="nationality">
-                <label for="edit_nationality">Nationality</label>
-              </div>
-              <div class="form-floating">
-                <textarea class="form-control" id="edit_address" name="address" style="height: 80px;"></textarea>
-                <label for="edit_address">Address</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_city" name="city">
-                <label for="edit_city">City</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_district" name="district">
-                <label for="edit_district">District</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_state" name="state">
-                <label for="edit_state">State</label>
-              </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="edit_pincode" name="pincode">
-                <label for="edit_pincode">Pin Code</label>
-              </div>
-              <div id="preview_image" class="mt-2">
-                <img src="" id="edit_photo_preview" alt="Profile Photo" class="img-thumbnail" width="100">
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="modal-footer bg-light rounded-bottom-4 d-flex justify-content-center gap-3">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-success">
-            <i class="fas fa-save me-1"></i> Save Changes
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
 
 
     </div> <!-- End col-md-10 -->
@@ -564,44 +455,33 @@ document.querySelectorAll('.approve-switch').forEach(function(switchInput) {
 </script>
 <!-- Edit Student View Ajax -->
 <script>
-// When the Edit button is clicked
-$(document).on('click', '.editBtn', function() {
-    var studentId = $(this).data('id'); // Get the student ID from the button
-    // Make an AJAX request to fetch the student data
-    $.ajax({
-        url: 'ed-view_student_data.php', // PHP file to fetch data
-        method: 'POST',
-        data: {id: studentId}, // Send the student ID
-        success: function(response) {
-            // Parse the JSON response
-            var student = JSON.parse(response);
-            
-            // Populate the modal fields with the student data
-            $('#editStudentModal #uid').val(student.id);
-            $('#editStudentModal #edit_name').val(student.name);
-            $('#editStudentModal #edit_email').val(student.email);
-            $('#editStudentModal #edit_mobile').val(student.mobile);
-            $('#editStudentModal #edit_father').val(student.father_name);
-            $('#editStudentModal #edit_dob').val(student.dob);
-            $('#editStudentModal #edit_gender').val(student.gender);
-            $('#editStudentModal #edit_aadhaar').val(student.aadhaar);
-            $('#editStudentModal #edit_qualification').val(student.qualification);
-            $('#editStudentModal #edit_course').val(student.course);
-            $('#editStudentModal #edit_religion').val(student.religion);
-            $('#editStudentModal #edit_nationality').val(student.nationality);
-            $('#editStudentModal #edit_address').val(student.address);
-            $('#editStudentModal #edit_city').val(student.city);
-            $('#editStudentModal #edit_district').val(student.district);
-            $('#editStudentModal #edit_state').val(student.state);
-            $('#editStudentModal #edit_pincode').val(student.pin_code);
-
-            // Show the modal
-            $('#editStudentModal').modal('show');
-        },
-        error: function() {
-            alert('Error fetching student data!');
-        }
-    });
+  $(document).on('click', '.viewBtn', function() {
+  var studentId = $(this).data('id'); // Get student ID from button
+  $.ajax({
+    url: 'ed-view_student.php', // Your PHP file to fetch student details
+    method: 'GET',
+    data: { id: studentId },
+    success: function(response) {
+      var student = JSON.parse(response); // Assuming the response is a JSON object
+      $('#view_photo').attr('src', student.photo);
+      $('#view_name').text(student.name);
+      $('#view_email').text(student.email);
+      $('#view_course').text(student.course);
+      $('#view_mobile').text(student.mobile);
+      $('#view_father').text(student.father);
+      $('#view_dob').text(student.dob);
+      $('#view_gender').text(student.gender);
+      $('#view_aadhaar').text(student.aadhaar);
+      $('#view_qualification').text(student.qualification);
+      $('#view_religion').text(student.religion);
+      $('#view_nationality').text(student.nationality);
+      $('#view_address').text(student.address);
+      $('#view_city').text(student.city);
+      $('#view_district').text(student.district);
+      $('#view_state').text(student.state);
+      $('#view_pincode').text(student.pincode);
+    }
+  });
 });
 
 </script>
