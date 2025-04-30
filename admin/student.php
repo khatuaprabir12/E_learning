@@ -97,12 +97,12 @@ if (isset($_SESSION['error'])) {
             <th>#</th>
             <th>Student ID</th>
             <th>Name</th>
-            <th>Father Name</th>
             <th>Mobile</th>
             <th>Email</th>
             <th>Course</th>
             <th>Profile Image</th>
             <th>Approved</th>
+            <th>Display</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -126,7 +126,6 @@ if (isset($_SESSION['error'])) {
             <td><?php echo $serial++; ?></td>
             <td><?php echo htmlspecialchars($student['student_id']); ?></td>
             <td><?php echo htmlspecialchars($student['student_name']); ?></td>
-            <td><?php echo htmlspecialchars($student['father_name']); ?></td>
             <td><?php echo htmlspecialchars($student['mobile']); ?></td>
             <td><?php echo htmlspecialchars($student['email']); ?></td>
             <td><?php echo htmlspecialchars($student['course']); ?></td>
@@ -145,10 +144,19 @@ if (isset($_SESSION['error'])) {
                 >
               </div>
             </td>
+            <td>
+              <button 
+                class="btn btn-sm btn-primary view-btn" 
+                data-bs-toggle="modal" 
+                data-bs-target="#viewStudentModal"
+                data-id="<?php echo $student['id']; ?>"
+                >
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
 
 
             <td>
-              <a href="ed_del_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
               <a href="ed_del_student.php?id=<?php echo $student['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');"><i class="fas fa-trash"></i></a>
             </td>
           </tr>
@@ -163,6 +171,7 @@ if (isset($_SESSION['error'])) {
     </div>
   </div>
 </div>
+
 
 <!-- Add Student Modal -->
 <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
@@ -229,11 +238,7 @@ if (isset($_SESSION['error'])) {
             <label for="course" class="form-label">Course</label>
             <select name="course" class="form-select" id="course" required>
               <option value="">Select Course</option>
-              
-              
               <?php
-    
-
     // Fetch all course categories
     $categoryQuery = "SELECT * FROM course_category ORDER BY category_name ASC";
     $categoryResult = mysqli_query($connect, $categoryQuery);
@@ -320,6 +325,161 @@ if (isset($_SESSION['error'])) {
 
 
 
+<!-- Student View Modal -->
+<div class="modal fade" id="viewStudentModal" tabindex="-1" aria-labelledby="viewStudentLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content border-0 shadow rounded-4">
+      <div class="modal-header bg-primary text-white rounded-top-4">
+        <h5 class="modal-title"><i class="fas fa-user-graduate me-2"></i>Student Profile</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body px-5 py-4">
+        <div class="text-center mb-4">
+          <img id="view_photo" src="" alt="Profile Photo" class="rounded-circle border shadow" width="120" height="120">
+          <h4 class="mt-3 mb-0 text-primary fw-semibold" id="view_name"></h4>
+          <p class="text-muted" id="view_email"></p>
+          <p class="text-muted mb-1" id="view_course"></p>
+        </div>
+
+        <hr>
+
+        <div class="row g-4">
+          <div class="col-md-6">
+            <p><strong class="text-primary">Mobile:</strong> <span class="text-dark" id="view_mobile"></span></p>
+            <p><strong class="text-primary">Father's Name:</strong> <span class="text-dark" id="view_father"></span></p>
+            <p><strong class="text-primary">DOB:</strong> <span class="text-dark" id="view_dob"></span></p>
+            <p><strong class="text-primary">Gender:</strong> <span class="text-dark" id="view_gender"></span></p>
+            <p><strong class="text-primary">Aadhaar No.:</strong> <span class="text-dark" id="view_aadhaar"></span></p>
+            <p><strong class="text-primary">Qualification:</strong> <span class="text-dark" id="view_qualification"></span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong class="text-primary">Religion:</strong> <span class="text-dark" id="view_religion"></span></p>
+            <p><strong class="text-primary">Nationality:</strong> <span class="text-dark" id="view_nationality"></span></p>
+            <p><strong class="text-primary">Address:</strong> <span class="text-dark" id="view_address"></span></p>
+            <p><strong class="text-primary">City:</strong> <span class="text-dark" id="view_city"></span></p>
+            <p><strong class="text-primary">District:</strong> <span class="text-dark" id="view_district"></span></p>
+            <p><strong class="text-primary">State:</strong> <span class="text-dark" id="view_state"></span></p>
+            <p><strong class="text-primary">Pin Code:</strong> <span class="text-dark" id="view_pincode"></span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer with Edit Button -->
+      <div class="modal-footer bg-light rounded-bottom-4 d-flex justify-content-center gap-3">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning editBtn" data-id="<?php echo $student['id']; ?>" data-bs-toggle="modal" data-bs-target="#editStudentModal">
+        <i class="fas fa-edit me-1"></i> Edit
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Edit Student Modal -->
+<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content border-0 shadow rounded-4">
+      <div class="modal-header bg-warning text-white rounded-top-4">
+        <h5 class="modal-title"><i class="fas fa-user-edit me-2"></i>Edit Student</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="edit_student.php" method="post" enctype="multipart/form-data" id="editStudentForm">
+      <div class="modal-body px-5 py-4">
+          <div class="row g-3">
+            <div class="col-md-6">
+            <input type="hidden" class="form-control" id="uid" name="uid" required>
+
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_name" name="name" required>
+                <label for="edit_name">Student Name</label>
+              </div>
+              <div class="form-floating">
+                <input type="email" class="form-control" id="edit_email" name="email" required>
+                <label for="edit_email">Email</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_mobile" name="mobile" required>
+                <label for="edit_mobile">Mobile</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_father" name="father_name">
+                <label for="edit_father">Father's Name</label>
+              </div>
+              <div class="form-floating">
+                <input type="date" class="form-control" id="edit_dob" name="dob">
+                <label for="edit_dob">Date of Birth</label>
+              </div>
+              <div class="form-floating">
+                <select class="form-select" id="edit_gender" name="gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <label for="edit_gender">Gender</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_aadhaar" name="aadhaar">
+                <label for="edit_aadhaar">Aadhaar No.</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_qualification" name="qualification">
+                <label for="edit_qualification">Qualification</label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_course" name="course">
+                <label for="edit_course">Course</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_religion" name="religion">
+                <label for="edit_religion">Religion</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_nationality" name="nationality">
+                <label for="edit_nationality">Nationality</label>
+              </div>
+              <div class="form-floating">
+                <textarea class="form-control" id="edit_address" name="address" style="height: 80px;"></textarea>
+                <label for="edit_address">Address</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_city" name="city">
+                <label for="edit_city">City</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_district" name="district">
+                <label for="edit_district">District</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_state" name="state">
+                <label for="edit_state">State</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="edit_pincode" name="pincode">
+                <label for="edit_pincode">Pin Code</label>
+              </div>
+              <div id="preview_image" class="mt-2">
+                <img src="" id="edit_photo_preview" alt="Profile Photo" class="img-thumbnail" width="100">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer bg-light rounded-bottom-4 d-flex justify-content-center gap-3">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-save me-1"></i> Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -328,7 +488,7 @@ if (isset($_SESSION['error'])) {
   </div> <!-- End row -->
 </div> <!-- End container-fluid -->
 
-
+<!-- Approved Checked -->
 <script>
 document.querySelectorAll('.approve-switch').forEach(function(switchInput) {
     switchInput.addEventListener('change', function() {
@@ -363,6 +523,90 @@ document.querySelectorAll('.approve-switch').forEach(function(switchInput) {
     });
 });
 </script>
+
+<!-- View Ajax -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll(".view-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", function () {
+      const studentId = this.dataset.id;
+
+      fetch('view_student.php?id=' + studentId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById('view_name').textContent = data.student_name;
+            document.getElementById('view_email').textContent = data.email;
+            document.getElementById('view_mobile').textContent = data.mobile;
+            document.getElementById('view_father').textContent = data.father_name;
+            document.getElementById('view_dob').textContent = data.dob;
+            document.getElementById('view_gender').textContent = data.gender;
+            document.getElementById('view_aadhaar').textContent = data.aadhaar;
+            document.getElementById('view_qualification').textContent = data.qualification;
+            document.getElementById('view_course').textContent = data.course;
+            document.getElementById('view_religion').textContent = data.religion;
+            document.getElementById('view_nationality').textContent = data.nationality;
+            document.getElementById('view_address').textContent = data.address;
+            document.getElementById('view_city').textContent = data.city;
+            document.getElementById('view_district').textContent = data.district;
+            document.getElementById('view_state').textContent = data.state;
+            document.getElementById('view_pincode').textContent = data.pin_code;
+            document.getElementById('view_photo').src = '../uploads/' + data.profile_image;
+          } else {
+            alert('Student not found');
+          }
+        });
+    });
+  });
+});
+</script>
+<!-- Edit Student View Ajax -->
+<script>
+// When the Edit button is clicked
+$(document).on('click', '.editBtn', function() {
+    var studentId = $(this).data('id'); // Get the student ID from the button
+    // Make an AJAX request to fetch the student data
+    $.ajax({
+        url: 'ed-view_student_data.php', // PHP file to fetch data
+        method: 'POST',
+        data: {id: studentId}, // Send the student ID
+        success: function(response) {
+            // Parse the JSON response
+            var student = JSON.parse(response);
+            
+            // Populate the modal fields with the student data
+            $('#editStudentModal #uid').val(student.id);
+            $('#editStudentModal #edit_name').val(student.name);
+            $('#editStudentModal #edit_email').val(student.email);
+            $('#editStudentModal #edit_mobile').val(student.mobile);
+            $('#editStudentModal #edit_father').val(student.father_name);
+            $('#editStudentModal #edit_dob').val(student.dob);
+            $('#editStudentModal #edit_gender').val(student.gender);
+            $('#editStudentModal #edit_aadhaar').val(student.aadhaar);
+            $('#editStudentModal #edit_qualification').val(student.qualification);
+            $('#editStudentModal #edit_course').val(student.course);
+            $('#editStudentModal #edit_religion').val(student.religion);
+            $('#editStudentModal #edit_nationality').val(student.nationality);
+            $('#editStudentModal #edit_address').val(student.address);
+            $('#editStudentModal #edit_city').val(student.city);
+            $('#editStudentModal #edit_district').val(student.district);
+            $('#editStudentModal #edit_state').val(student.state);
+            $('#editStudentModal #edit_pincode').val(student.pin_code);
+
+            // Show the modal
+            $('#editStudentModal').modal('show');
+        },
+        error: function() {
+            alert('Error fetching student data!');
+        }
+    });
+});
+
+</script>
+
+
 
 <!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
