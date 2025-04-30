@@ -1,15 +1,16 @@
 <?php
 session_start();
+include '../connection.php'; // ✅ Corrected path and spelling
 
-// Admin details (assuming admin is already logged in)
 $adminName = isset($_SESSION['admin_name']) ? $_SESSION['admin_name'] : '';
 
-// Check if logout message is set in the session
 if (isset($_SESSION['logout_message'])) {
     $logoutMessage = $_SESSION['logout_message'];
-    unset($_SESSION['logout_message']);  // Unset after showing the message
+    unset($_SESSION['logout_message']);
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -128,18 +129,21 @@ if (isset($_SESSION['logout_message'])) {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Riya Sharma</td>
-              <td>riya@example.com</td>
-              <td>Web Development</td>
-              <td>2025-04-20</td>
-            </tr>
-            <tr>
-              <td>Arjun Mehta</td>
-              <td>arjun@example.com</td>
-              <td>Graphic Design</td>
-              <td>2025-04-18</td>
-            </tr>
+          <?php if (!empty($recentStudents)): ?>
+  <?php foreach ($recentStudents as $student): ?>
+    <tr>
+      <td><?php echo htmlspecialchars($student['student_name']); ?></td>
+      <td><?php echo htmlspecialchars($student['email']); ?></td>
+      <td><?php echo htmlspecialchars($student['course']); ?></td>
+      <td><?php echo htmlspecialchars($student['created_at']); ?></td>
+    </tr>
+  <?php endforeach; ?>
+<?php else: ?>
+  <tr>
+    <td colspan="4" class="text-center">No recent registrations found.</td>
+  </tr>
+<?php endif; ?>
+
           </tbody>
         </table>
       </div>
