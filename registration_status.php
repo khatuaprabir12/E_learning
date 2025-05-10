@@ -87,15 +87,22 @@ $student_id = $_SESSION['student_id'];
         <a href="index.php" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
   
         <!-- Courses dropdown -->
+        <?php
+            include ("connection.php");  // Fetch categories
+            $sql = "SELECT category_id, category_name FROM course_category";
+            $result = $connect->query($sql);
+        ?>
         <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <i class="fa fa-laptop-code me-2"></i>Courses
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="diploma.html" class="dropdown-item"><i class="fa fa-graduation-cap me-2"></i>Diploma</a>
-            <a href="certificate.html" class="dropdown-item"><i class="fa fa-certificate me-2"></i>Certificate</a>
-            <a href="advanced.html" class="dropdown-item"><i class="fa fa-rocket me-2"></i>Advance</a>
-          </div>
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="fa fa-laptop-code me-2"></i>Courses
+            </a>
+            <div class="dropdown-menu fade-down m-0">
+                <?php while($row = $result->fetch_assoc()): ?>
+                <a href="course/category.php?id=<?= $row['category_id']; ?>" class="dropdown-item">
+                    <i class="fa fa-book me-2"></i><?= htmlspecialchars($row['category_name']); ?>
+                </a>
+                <?php endwhile; ?>
+            </div>
         </div>
   
         <!-- Enquiry dropdown -->

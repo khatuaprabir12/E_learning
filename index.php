@@ -64,99 +64,110 @@ session_start();
 <!-- Toolbar End -->
 
 <!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-      <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
-    </a>
-    <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <div class="navbar-nav ms-auto p-4 p-lg-0">
-        <a href="index.php" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
-  
-        <!-- Courses dropdown -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <i class="fa fa-laptop-code me-2"></i>Courses
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="diploma.html" class="dropdown-item"><i class="fa fa-graduation-cap me-2"></i>Diploma</a>
-            <a href="certificate.html" class="dropdown-item"><i class="fa fa-certificate me-2"></i>Certificate</a>
-            <a href="advanced.html" class="dropdown-item"><i class="fa fa-rocket me-2"></i>Advance</a>
-          </div>
-        </div>
-  
-        <!-- Enquiry dropdown -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-            <i class="fa fa-envelope me-2"></i>Enquiry
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="atc-enquiry.html" class="dropdown-item"><i class="fa fa-building me-2"></i>ATC Enquiry</a>
-            <a href="student-enquiry.html" class="dropdown-item"><i class="fa fa-user-graduate me-2"></i>Student Enquiry</a>
-          </div>
-        </div>
-  
-        <!-- Student Zone dropdown -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-            <i class="fa fa-user-check me-2"></i>Student Zone
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="online-verification.html" class="dropdown-item"><i class="fa fa-check-circle me-2"></i>Online Verification</a>
-            <a href="online-exam.html" class="dropdown-item"><i class="fa fa-edit me-2"></i>Online Exam</a>
-            <a href="results.html" class="dropdown-item"><i class="fa fa-chart-line me-2"></i>Results</a>
-          </div>
-        </div>
-  
-        <!-- Download dropdown -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 14px;">
-            <i class="fa fa-download me-2"></i>Download
-          </a>
-          <div class="dropdown-menu fade-down m-0">
-            <a href="admission-form.html" class="dropdown-item"><i class="fa fa-file-alt me-2"></i>Admission Form</a>
-            <a href="admit-card-download.html" class="dropdown-item"><i class="fa fa-id-card me-2"></i>Admit Card</a>
-            <a href="notice-board.html" class="dropdown-item"><i class="fa fa-bullhorn me-2"></i>Notice Board</a>
-          </div>
-        </div>
-  
-       <!-- Contact  -->
-       <a href="contact.php" class="nav-item nav-link"><i class="fa fa-address-book me-2"></i>Contact Us</a>
-  
-        <!-- About -->
-        <a href="about.html" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About</a>
-  
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-      
-              <!-- Other Menu Items -->
-      
-              <?php if (isset($_SESSION['student_logged_in'])): ?>
-                <!-- Profile Dropdown -->
-                <div class="nav-item dropdown">
-                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <i class="fa fa-user-circle me-2"></i> Hi, <?= $_SESSION['student_name']; ?>
-                  </a>
-                  <div class="dropdown-menu fade-down m-0">
-                    <a href="profile.php" class="dropdown-item"><i class="fa fa-user me-2"></i> Profile</a>
-                    <a href="logout.php" class="dropdown-item"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
-                  </div>
-                </div>
-              <?php else: ?>
-                <!-- Login / Register -->
-                <a href="#" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
-                <a href="admission.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register</a>
-              <?php endif; ?>
-      
-            </div>
-          </div>
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
 
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+  <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
+  </a>
+  <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav ms-auto p-4 p-lg-0">
+
+      <!-- Home -->
+      <a href="index.php" class="nav-item nav-link <?= ($current_page == 'index.php') ? 'active text-primary' : ''; ?>">
+        <i class="fa fa-home me-2"></i>Home
+      </a>
+
+      <!-- Courses Dropdown -->
+      <?php
+        include("connection.php");
+        $sql = "SELECT category_id, category_name FROM course_category";
+        $result = $connect->query($sql);
+      ?>
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle <?= ($current_page == 'category.php') ? 'active text-primary' : ''; ?>" data-bs-toggle="dropdown">
+          <i class="fa fa-laptop-code me-2"></i>Courses
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <a href="course/category.php?id=<?= $row['category_id']; ?>" class="dropdown-item">
+              <i class="fa fa-book me-2"></i><?= htmlspecialchars($row['category_name']); ?>
+            </a>
+          <?php endwhile; ?>
+        </div>
       </div>
+
+      <!-- Enquiry Dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle <?= in_array($current_page, ['atc-enquiry.php', 'student-enquiry.php']) ? 'active text-primary' : ''; ?>" data-bs-toggle="dropdown">
+          <i class="fa fa-envelope me-2"></i>Enquiry
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="atc-enquiry.php" class="dropdown-item"><i class="fa fa-building me-2"></i>ATC Enquiry</a>
+          <a href="student-enquiry.php" class="dropdown-item"><i class="fa fa-user-graduate me-2"></i>Student Enquiry</a>
+        </div>
+      </div>
+
+      <!-- Student Zone Dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle <?= in_array($current_page, ['online-verification.php', 'online-exam.php', 'results.php']) ? 'active text-primary' : ''; ?>" data-bs-toggle="dropdown">
+          <i class="fa fa-user-check me-2"></i>Student Zone
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="online-verification.php" class="dropdown-item"><i class="fa fa-check-circle me-2"></i>Online Verification</a>
+          <a href="online-exam.php" class="dropdown-item"><i class="fa fa-edit me-2"></i>Online Exam</a>
+          <a href="results.php" class="dropdown-item"><i class="fa fa-chart-line me-2"></i>Results</a>
+        </div>
+      </div>
+
+      <!-- Download Dropdown -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle <?= in_array($current_page, ['admission-form.php', 'admit-card-download.php', 'notice-board.php']) ? 'active text-primary' : ''; ?>" data-bs-toggle="dropdown">
+          <i class="fa fa-download me-2"></i>Download
+        </a>
+        <div class="dropdown-menu fade-down m-0">
+          <a href="admission-form.php" class="dropdown-item"><i class="fa fa-file-alt me-2"></i>Admission Form</a>
+          <a href="admit-card-download.php" class="dropdown-item"><i class="fa fa-id-card me-2"></i>Admit Card</a>
+          <a href="notice-board.php" class="dropdown-item"><i class="fa fa-bullhorn me-2"></i>Notice Board</a>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <a href="contact.php" class="nav-item nav-link <?= ($current_page == 'contact.php') ? 'active text-primary' : ''; ?>">
+        <i class="fa fa-address-book me-2"></i>Contact Us
+      </a>
+
+      <!-- About -->
+      <a href="about.php" class="nav-item nav-link <?= ($current_page == 'about.php') ? 'active text-primary' : ''; ?>">
+        <i class="fa fa-info-circle me-2"></i>About
+      </a>
+
+      <!-- Login/Register or Profile -->
+      <?php if (isset($_SESSION['student_logged_in'])): ?>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle <?= ($current_page == 'profile.php') ? 'active text-primary' : ''; ?>" data-bs-toggle="dropdown">
+            <i class="fa fa-user-circle me-2"></i>Hi, <?= $_SESSION['student_name']; ?>
+          </a>
+          <div class="dropdown-menu fade-down m-0">
+            <a href="profile.php" class="dropdown-item"><i class="fa fa-user me-2"></i> Profile</a>
+            <a href="logout.php" class="dropdown-item"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
+          </div>
+        </div>
+      <?php else: ?>
+        <a href="#" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
+        <a href="admission.php" class="nav-item nav-link <?= ($current_page == 'admission.php') ? 'active text-primary' : ''; ?>"><i class="fa fa-user-plus me-2"></i>Register</a>
+      <?php endif; ?>
+      
     </div>
-  </nav>
+  </div>
+</nav>
+
   <!-- Navbar End -->
   
 

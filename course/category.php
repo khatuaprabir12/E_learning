@@ -1,18 +1,45 @@
 <?php
 session_start();
+
+include("../connection.php"); // DB connection
+
+// Check if category ID is provided
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die("Invalid category.");
+}
+
+$category_id = intval($_GET['id']);
+
+// Get category name
+$category_query = "SELECT category_name FROM course_category WHERE category_id = $category_id";
+$category_result = $connect->query($category_query);
+
+if ($category_result->num_rows == 0) {
+    die("Category not found.");
+}
+
+$category = $category_result->fetch_assoc();
+$category_name = $category['category_name'];
+
+// Fetch courses under this category
+$course_query = "SELECT course_id, course_title, course_description, course_duration, course_image  FROM course WHERE category_id = $category_id";
+$courses_result = $connect->query($course_query);
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
     <meta charset="utf-8">
-    <title>Edufuture Academy - Best Learning Platform for Computer Courses in India</title>
+    <title><?= htmlspecialchars($category_name); ?> Courses</title>
     <meta name="description" content="Edufuture Academy offers top-notch courses in Tally, Programming, Graphic Design, Digital Marketing, Web Development, and more. Enhance your skills with expert-led training.">
     <meta name="keywords" content="Edufuture Academy, Tally courses, Programming courses, Graphic Design, Digital Marketing, Web Development, online learning, skill development, best courses in India">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
-    <link rel="icon" href="img/favicon.io.ico" sizes="40x40">
+    <link rel="icon" href="../img/favicon.io.ico" sizes="40x40">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,15 +51,15 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style2.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/style2.css" rel="stylesheet">
 
 </head>
 
@@ -69,7 +96,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
   <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-    <img src="img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
+    <img src="../img/logo.jpg" alt="Edufuture Academy Logo" style="max-height: 60px;">
   </a>
   <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
     <span class="navbar-toggler-icon"></span>
@@ -79,13 +106,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <div class="navbar-nav ms-auto p-4 p-lg-0">
 
       <!-- Home -->
-      <a href="index.php" class="nav-item nav-link <?= ($current_page == 'index.php') ? 'active text-primary' : ''; ?>">
+      <a href="../index.php" class="nav-item nav-link <?= ($current_page == 'index.php') ? 'active text-primary' : ''; ?>">
         <i class="fa fa-home me-2"></i>Home
       </a>
 
       <!-- Courses Dropdown -->
       <?php
-        include("connection.php");
         $sql = "SELECT category_id, category_name FROM course_category";
         $result = $connect->query($sql);
       ?>
@@ -95,7 +121,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </a>
         <div class="dropdown-menu fade-down m-0">
           <?php while ($row = $result->fetch_assoc()): ?>
-            <a href="course/category.php?id=<?= $row['category_id']; ?>" class="dropdown-item">
+            <a href="category.php?id=<?= $row['category_id']; ?>" class="dropdown-item">
               <i class="fa fa-book me-2"></i><?= htmlspecialchars($row['category_name']); ?>
             </a>
           <?php endwhile; ?>
@@ -138,12 +164,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
       </div>
 
       <!-- Contact -->
-      <a href="contact.php" class="nav-item nav-link <?= ($current_page == 'contact.php') ? 'active text-primary' : ''; ?>">
+      <a href="../contact.php" class="nav-item nav-link <?= ($current_page == 'contact.php') ? 'active text-primary' : ''; ?>">
         <i class="fa fa-address-book me-2"></i>Contact Us
       </a>
 
       <!-- About -->
-      <a href="about.php" class="nav-item nav-link <?= ($current_page == 'about.php') ? 'active text-primary' : ''; ?>">
+      <a href="../about.php" class="nav-item nav-link <?= ($current_page == 'about.php') ? 'active text-primary' : ''; ?>">
         <i class="fa fa-info-circle me-2"></i>About
       </a>
 
@@ -154,13 +180,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <i class="fa fa-user-circle me-2"></i>Hi, <?= $_SESSION['student_name']; ?>
           </a>
           <div class="dropdown-menu fade-down m-0">
-            <a href="profile.php" class="dropdown-item"><i class="fa fa-user me-2"></i> Profile</a>
-            <a href="logout.php" class="dropdown-item"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
+            <a href="../profile.php" class="dropdown-item"><i class="fa fa-user me-2"></i> Profile</a>
+            <a href="../logout.php" class="dropdown-item"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
           </div>
         </div>
       <?php else: ?>
         <a href="#" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa fa-sign-in-alt me-2"></i>Login</a>
-        <a href="admission.php" class="nav-item nav-link <?= ($current_page == 'admission.php') ? 'active text-primary' : ''; ?>"><i class="fa fa-user-plus me-2"></i>Register</a>
+        <a href="../admission.php" class="nav-item nav-link <?= ($current_page == 'admission.php') ? 'active text-primary' : ''; ?>"><i class="fa fa-user-plus me-2"></i>Register</a>
       <?php endif; ?>
       
     </div>
@@ -183,11 +209,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">About Edufuture Academy</h1>
+                    <h1 class="display-3 text-white animated slideInDown">Course</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a class="text-white" href="index.php">Home</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">About Us</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Course</li>
                         </ol>
                     </nav>
                         </ol>
@@ -199,178 +225,51 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <!-- Header End -->
 
 
-    <!-- Service Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
-                            <h5 class="mb-3">Skilled Instructors</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
+   
+    <div class="container py-5">
+        <h2 class="mb-4"><?= htmlspecialchars($category_name); ?> Courses</h2>
+
+        <?php if ($courses_result->num_rows > 0): ?>
+        <div class="row">
+            <?php while ($course = $courses_result->fetch_assoc()): ?>
+               <div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow border-0 rounded-4">
+                <?php if (!empty($course['course_image'])): ?>
+                    <img src="../admin/uploads/<?= htmlspecialchars($course['course_image']); ?>"  class="card-img-top rounded-top-4" alt="Course Image"style="height: 300px; object-fit: cover;" alt="Course Image">
+                <?php endif; ?>
+                <div class="card-body">
+                    <h3 class="card-title text-primary mb-3"><?= htmlspecialchars($course['course_title']); ?></h3>
+                    <p class="card-text">
+                        <?= nl2br(htmlspecialchars($course['course_description'])); ?>
+                    </p>
+                    <p class="mt-3">
+                        <i class="fa fa-clock me-2 text-secondary"></i>
+                        <strong>Duration:</strong> <?= htmlspecialchars($course['course_duration']); ?>
+                    </p>
                 </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-globe text-primary mb-4"></i>
-                            <h5 class="mb-3">Online Classes</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-home text-primary mb-4"></i>
-                            <h5 class="mb-3">Home Projects</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
-                            <h5 class="mb-3">Book Library</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
+                <div class="card-footer bg-white text-end">
+                    <a href="../admission.php" class="btn btn-success">
+                        <i class="fa fa-user-plus me-1"></i> Enroll Now
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Service End -->
+</div>
 
-
-    <!-- About Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
-                    <div class="position-relative h-100">
-                        <img class="img-fluid position-absolute w-100 h-100" src="img/about.jpg" alt="" style="object-fit: cover;">
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
-                    <h1 class="mb-4">Welcome to eLEARNING</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <div class="row gy-2 gx-4 mb-4">
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
-                        </div>
-                    </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
-                </div>
-            </div>
+            <?php endwhile; ?>
         </div>
+        <?php else: ?>
+        <div class="alert alert-info">No courses found in this category.</div>
+        <?php endif; ?>
     </div>
-    <!-- About End -->
+
+    
 
 
-    <!-- Team Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
-                <h1 class="mb-5">Expert Instructors</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Team End -->
+  
         
 
     <!-- Footer Start -->
@@ -529,13 +428,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/wow/wow.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 
 </html>
