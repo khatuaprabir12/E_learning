@@ -361,7 +361,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
           <h5 class="modal-title" id="loginModalLabel">Edufuture Academy Login</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="authenticate.php" method="POST">
+        <form action="../authenticate.php" method="POST">
           <div class="modal-body">
             <?php if (isset($_GET['error'])): ?>
               <?php if ($_GET['error'] == 1): ?>
@@ -401,7 +401,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
   
             <!-- Register Link -->
             <p class="text-center mb-0">Don't have an account? 
-              <a href="admission.php" class="text-decoration-none">Register here</a>
+              <a href="../admission.php" class="text-decoration-none">Register here</a>
             </p>
           </div>
         </form>
